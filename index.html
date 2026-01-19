@@ -1,19 +1,69 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aumkaar | Sound Healing & Meditation</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>Aumkaar | Sound Healing, Meditation & Mind Management</title>
+    <meta name="title" content="Aumkaar | Sound Healing, Meditation & Mind Management" />
+    <meta name="description" content="Aumkaar offers a sanctuary for deep rest through Sound Healing, Tibetan Sound Spa, and Mind Management. Find your balance with That Meditation Couple." />
+    <meta name="keywords" content="sound healing, meditation, tibetan sound spa, chakra balancing, mind management, corporate wellness, aumkaar, that meditation couple" />
+    <meta name="author" content="Aumkaar Wellness" />
+    <link rel="canonical" href="https://aumkaar.com/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://aumkaar.com/" />
+    <meta property="og:title" content="Aumkaar | Sound Healing & Meditation" />
+    <meta property="og:description" content="Rediscover the ancient wisdom of sound. A sanctuary where vibration shifts inner states and restores natural harmony." />
+    <meta property="og:image" content="https://i.ibb.co/XZVGhG2h/Aumkaar-20260112-161626-0000.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://aumkaar.com/" />
+    <meta property="twitter:title" content="Aumkaar | Sound Healing & Meditation" />
+    <meta property="twitter:description" content="Rediscover the ancient wisdom of sound. A sanctuary where vibration shifts inner states and restores natural harmony." />
+    <meta property="twitter:image" content="https://i.ibb.co/XZVGhG2h/Aumkaar-20260112-161626-0000.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://i.ibb.co/XZVGhG2h/Aumkaar-20260112-161626-0000.png" type="image/png" />
+    <link rel="apple-touch-icon" href="https://i.ibb.co/XZVGhG2h/Aumkaar-20260112-161626-0000.png" />
+
+    <!-- Fonts & Scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WellnessCenter",
+      "name": "Aumkaar",
+      "description": "Sound Healing and Meditation Sanctuary",
+      "url": "https://aumkaar.com/",
+      "logo": "https://i.ibb.co/XZVGhG2h/Aumkaar-20260112-161626-0000.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Hyderabad",
+        "addressRegion": "TG",
+        "postalCode": "500104",
+        "streetAddress": "4th Floor, Dukes Avenue, Al Hamra Colony, Shaikpet"
+      }
+    }
+    </script>
+
     <style>
       body {
         font-family: 'Lato', sans-serif;
-        background-color: #FDFBF7; /* Clean Off-White */
-        color: #3E2723; /* Dark Espresso */
+        background-color: #FDFBF7;
+        color: #3E2723;
+        margin: 0;
+        padding: 0;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
       h1, h2, h3, h4, h5, h6 {
         font-family: 'Cormorant Garamond', serif;
@@ -22,10 +72,56 @@
         font-family: 'Cormorant Garamond', serif;
         font-style: italic;
       }
+      .bg-texture {
+        background-color: #5D4037;
+        background-image: url('https://i.ibb.co/35N2n6cp/20260112-1750-Image-Generation-remix-01kes2ckpcezg91xgs6v01k7ak.png');
+        background-blend-mode: soft-light;
+        background-size: cover;
+        background-position: center;
+      }
+      .btn-texture {
+        background-color: #A05035;
+        background-image: url('https://i.ibb.co/35N2n6cp/20260112-1750-Image-Generation-remix-01kes2ckpcezg91xgs6v01k7ak.png');
+        background-blend-mode: soft-light;
+        background-size: cover;
+        background-position: center;
+        transition: all 0.4s ease;
+      }
+      .btn-texture:hover {
+        background-color: #B5654A;
+        filter: brightness(1.15);
+      }
+      /* Custom scrollbar for better production feel */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #FDFBF7;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #A05035;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #3E2723;
+      }
     </style>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://aistudiocdn.com/react@^19.2.1",
+        "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+        "react/": "https://aistudiocdn.com/react@^19.2.1/",
+        "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0",
+        "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.10.1"
+      }
+    }
+    </script>
   </head>
   <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>

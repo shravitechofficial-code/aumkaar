@@ -1,9 +1,10 @@
-
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { CheckCircle2, Loader2 } from 'lucide-react';
 import { submitForm } from '../services/submissionService';
 
 const Contact: React.FC = () => {
+  const location = useLocation();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -11,12 +12,18 @@ const Contact: React.FC = () => {
     email: '',
     phone: '',
     service: 'General Inquiry',
-    message: ''
+    message: '',
+    preferredDate: '',
+    preferredTime: ''
   });
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    // Pre-select service if passed in navigation state
+    if (location.state && (location.state as any).service) {
+      setFormData(prev => ({ ...prev, service: (location.state as any).service }));
+    }
+  }, [location.state]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,7 +37,9 @@ const Contact: React.FC = () => {
       phone: formData.phone,
       service: formData.service,
       message: formData.message,
-      pageUrl: window.location.href
+      pageUrl: window.location.href,
+      preferredDate: formData.preferredDate,
+      preferredTime: formData.preferredTime
     });
 
     if (success) {
@@ -55,17 +64,17 @@ const Contact: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-12 items-stretch shadow-2xl rounded-[2rem] md:rounded-[3rem] overflow-hidden border border-[#A05035]/10">
           
-          <div className="bg-[#A05035] text-[#FDFBF7] p-8 md:p-16 flex flex-col justify-center">
+          <div className="bg-texture text-[#FDFBF7] p-8 md:p-16 flex flex-col justify-center">
             <h3 className="text-3xl md:text-4xl font-serif mb-8 md:mb-12 text-[#F4EFE6]">Visit Our Sanctuary</h3>
             <div className="space-y-8 md:space-y-12 font-light">
               <div>
                 <span className="block text-[10px] font-bold uppercase tracking-[0.4em] text-[#FDFBF7]/60 mb-3 md:mb-4">Location</span>
-                <p className="text-xl md:text-2xl leading-relaxed opacity-95 font-serif">123 Serenity Lane<br/>Wellness District, CA 90210</p>
+                <p className="text-xl md:text-2xl leading-relaxed opacity-95 font-serif">4th Floor, Dukes Avenue, Al Hamra Colony, Shaikpet, Hyderabad, TG - 500104</p>
               </div>
               <div>
                 <span className="block text-[10px] font-bold uppercase tracking-[0.4em] text-[#FDFBF7]/60 mb-3 md:mb-4">Direct Contact</span>
                 <p className="text-xl md:text-2xl opacity-95 font-serif">hello@aumkaar.com</p>
-                <p className="text-xl md:text-2xl opacity-95 font-serif">+1 (555) 123-4567</p>
+                <p className="text-xl md:text-2xl opacity-95 font-serif">+91 9988166977</p>
               </div>
               <div>
                 <span className="block text-[10px] font-bold uppercase tracking-[0.4em] text-[#FDFBF7]/60 mb-3 md:mb-4">Sacred Hours</span>
@@ -115,7 +124,7 @@ const Contact: React.FC = () => {
                       required
                       type="tel" 
                       className="w-full bg-[#FDFBF7] border-b border-[#A05035]/20 p-4 text-[#3E2723] focus:border-[#A05035] focus:outline-none placeholder-[#3E2723]/30 transition-all text-sm font-medium disabled:opacity-50" 
-                      placeholder="+1 (000) 000-0000"
+                      placeholder="+91 00000 00000"
                       value={formData.phone}
                       onChange={(e) => setFormData({...formData, phone: e.target.value})}
                     />
@@ -133,6 +142,34 @@ const Contact: React.FC = () => {
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
                   />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                  <div className="group">
+                    <label className="block text-[10px] font-bold text-[#A05035] uppercase tracking-[0.3em] mb-3">Preferred Date</label>
+                    <div className="relative">
+                      <input 
+                        disabled={isSubmitting}
+                        type="date" 
+                        className="w-full bg-[#FDFBF7] border-b border-[#A05035]/20 p-4 text-[#3E2723] focus:border-[#A05035] focus:outline-none transition-all text-sm font-medium disabled:opacity-50" 
+                        value={formData.preferredDate}
+                        onChange={(e) => setFormData({...formData, preferredDate: e.target.value})}
+                      />
+                    </div>
+                  </div>
+                  <div className="group">
+                    <label className="block text-[10px] font-bold text-[#A05035] uppercase tracking-[0.3em] mb-3">Preferred Time</label>
+                    <div className="relative">
+                      <input 
+                        disabled={isSubmitting}
+                        type="time" 
+                        step="900"
+                        className="w-full bg-[#FDFBF7] border-b border-[#A05035]/20 p-4 text-[#3E2723] focus:border-[#A05035] focus:outline-none transition-all text-sm font-medium disabled:opacity-50" 
+                        value={formData.preferredTime}
+                        onChange={(e) => setFormData({...formData, preferredTime: e.target.value})}
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="group">
@@ -176,7 +213,7 @@ const Contact: React.FC = () => {
                 <button 
                   disabled={isSubmitting}
                   type="submit" 
-                  className="w-full bg-[#A05035] text-[#FDFBF7] font-bold tracking-[0.5em] uppercase py-5 rounded-full hover:bg-[#3E2723] transition-all shadow-xl mt-4 active:scale-95 text-[11px] flex items-center justify-center gap-3 disabled:bg-[#3E2723]/70"
+                  className="w-full text-[#FDFBF7] font-bold tracking-[0.5em] uppercase py-5 rounded-full shadow-xl mt-4 active:scale-95 text-[11px] flex items-center justify-center gap-3 disabled:opacity-70 btn-texture"
                 >
                   {isSubmitting ? (
                     <>

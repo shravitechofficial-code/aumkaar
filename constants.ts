@@ -4,8 +4,11 @@ import { NavItem, Service, TeamMember, Testimonial, BlogPost, Event } from './ty
 
 export const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1530968464168-ab892026e567?q=80&w=2070&auto=format&fit=crop';
 
-// The Google Apps Script Web App URL for data submission
+// Webhook for form submissions (Lead capture, contact forms)
 export const SUBMISSION_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbz3HRLmWm6G59X_IJyn4b0uSj6UWDa0QIba9MzJLnbVtiv7j01DqlWrc8q_YVCXepzK/exec'; 
+
+// Central API for fetching and saving site content (CMS Database)
+export const DATA_API_URL = 'https://script.google.com/macros/s/AKfycbwwSwLOacneBuhB_0yUM4DBhoB-J2lbinVLPoBUdQM8i5iQmxJH5nGetDZSqkgHWRns/exec';
 
 export const NAV_ITEMS: NavItem[] = [
   { 
@@ -24,6 +27,14 @@ export const NAV_ITEMS: NavItem[] = [
       { label: 'Others', isHeader: true },
       { label: 'Mind Management Session', path: '/service/mind-management-session' },
       { label: 'Tai Chi Meditation', path: '/service/tai-chi' }
+    ]
+  },
+  {
+    label: '1:1 HEALING',
+    submenu: [
+      { label: 'Tibetan Sound Spa', path: '/service/tibetan-sound-spa' },
+      { label: 'Chakra Alignment', path: '/service/chakra-sound-balancing' },
+      { label: 'Couple Sound Therapy', path: '/service/couples-sound-therapy' }
     ]
   },
   { label: 'EVENTS', path: '/events' },
@@ -90,9 +101,9 @@ export const SERVICES: Service[] = [
     category: 'Sound Therapy',
     shortDescription: 'A personalised, multi-instrument journey for emotional and energetic alignment.',
     fullDescription: 'Sound Healing is a deeper, intention-led experience that includes both off-body sound fields and on-body vibration placement.',
-    duration: '75–90 Minutes',
+    duration: '75–90 minutes',
     price: 'Enquire for Pricing',
-    image: 'https://images.unsplash.com/photo-1512438248247-f0f2a5a8b7f0?q=80&w=2070&auto=format&fit=crop', 
+    image: 'https://i.ibb.co/vxDC7ckR/Naad.png', 
     benefits: [
       'Emotional clarity and release',
       'Improved sleep and deeper rest',
@@ -105,7 +116,7 @@ export const SERVICES: Service[] = [
     ],
     details: {
       whatItIs: {
-        description: 'Sound Healing is a personalised session offered one-on-one, for couples, or in small groups using Tibetan bowls, crystal bowls, gongs, handpan, drums and chimes. Unlike a Sound Bath, this is a deeper, intention-led experience.',
+        description: 'Sound Healing is a personalised session offered one-on-one, for couples, or in small groups using Tibetan bowls, crystal bowls, gongs, handpan, drums and chimes.',
         points: [
           'Off-body sound fields (frequencies surrounding the body)',
           'On-body vibration placement (gentle vibration through selected bowls, with no physical touch)'
@@ -135,7 +146,7 @@ export const SERVICES: Service[] = [
       preSession: [
         'Wear loose, comfortable clothing',
         'Stay hydrated',
-        'Keep stomach light (avoid heavy meals 2 hours prior)',
+        'Avoid heavy meals 2 hours prior',
         'Reduce caffeine intake on the day',
         'Arrive with openness and without rush'
       ],
@@ -186,7 +197,7 @@ export const SERVICES: Service[] = [
     fullDescription: 'A meditative sound immersion where you relax comfortably while layers of sound gently wash over the body.',
     duration: '75–90 Minutes',
     price: 'Enquire for Pricing',
-    image: 'https://images.unsplash.com/photo-1515023115689-589c33041d3c?q=80&w=2070&auto=format&fit=crop', 
+    image: 'https://i.ibb.co/6JZ0wxWM/anhad.png', 
     benefits: [
       'Deep mental and physical relaxation',
       'Reduced stress, tension and fatigue',
@@ -265,7 +276,7 @@ export const SERVICES: Service[] = [
     fullDescription: 'A personalised, one-on-one sound therapy where Himalayan singing bowls are placed on and around the body with no physical touch involved.',
     duration: '75 to 90 minutes',
     price: 'Enquire for Pricing',
-    image: 'https://images.unsplash.com/photo-1593811167024-5d93e1744b89?q=80&w=2070&auto=format&fit=crop', 
+    image: 'https://i.ibb.co/gpkJrZG/Tarang.png', 
     benefits: [
       'Deep physical relaxation',
       'Reduced tension in the back, neck and jaw',
@@ -344,7 +355,7 @@ export const SERVICES: Service[] = [
     fullDescription: 'A personalised one-to-one session that harmonises the seven chakras using sound frequencies, breathwork, intention and Kundalini beej mantras.',
     duration: '75–90 minutes',
     price: 'Enquire for Pricing',
-    image: 'https://images.unsplash.com/photo-1528319725582-ddc0b60ea2d1?q=80&w=2070&auto=format&fit=crop',
+    image: 'https://i.ibb.co/Nd0Bctc3/Chakra.png',
     benefits: [
       'Feeling grounded and emotionally centred',
       'Improved clarity and inner alignment',
@@ -395,7 +406,7 @@ export const SERVICES: Service[] = [
       ],
       faqs: [
         { question: 'Do I need understand chakras to attend?', answer: 'No. The session is fully guided and suitable for complete beginners.' },
-        { question: 'How do I know if my chakras are imbalanced?', answer: 'Common signs include emotional heaviness, confusion, lack of clarity, low confidence, fatigue, overthinking, or feeling “stuck.”' },
+        { question: 'How do I know if my chakras are imbalanced?', answer: 'Common signs include emotional heaviness, confusion, landscape of life, confusion, low confidence, fatigue, overthinking, or feeling “stuck.”' },
         { question: 'What happens in a Chakra Alignment session?', answer: 'You experience chakra-tuned bowls, guided breathwork, beej mantra chanting, visualisation and optional aromatherapy for each chakra.' },
         { question: 'Do I have to chant the mantras?', answer: 'No. Chanting is optional you may listen, hum, or chant based on comfort.' },
         { question: 'Is there any physical touch involved?', answer: 'No. Bowls may be placed on or off the body, but there is no physical touch.' },
@@ -413,7 +424,7 @@ export const SERVICES: Service[] = [
     fullDescription: 'This 90-minute private, immersive, multi-instrument experience guides you and your partner into deep relaxation, energetic harmony and a shared experience of connection.',
     duration: '75–90 Minutes',
     price: 'Enquire for Pricing',
-    image: 'https://images.unsplash.com/photo-1544126592-807daa2b5682?q=80&w=2070&auto=format&fit=crop',
+    image: 'https://i.ibb.co/1g6nPHw/dwani.png',
     benefits: [
       'Simultaneous nervous system calming',
       'Emotional synchrony (Breath, Heart, Brainwaves)',
@@ -509,7 +520,7 @@ export const SERVICES: Service[] = [
     fullDescription: 'A guided sound-healing experience that blends intention, frequency, breathwork, visualisation and subconscious alignment to help you clarify what you want and vibrationally attune yourself to it.',
     duration: '75–90 minutes',
     price: 'Enquire for Pricing',
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=2070&auto=format&fit=crop',
+    image: 'https://i.ibb.co/CdQJT9k/sankalpa.png',
     benefits: [
       'Clearer understanding of your goals',
       'Increased confidence and emotional alignment',
@@ -604,7 +615,7 @@ export const SERVICES: Service[] = [
     fullDescription: 'A personalised session that uses intention + tailored frequencies to support emotional regulation and inner alignment, interacting with the body and brain in measurable ways.',
     duration: '75–90 minutes',
     price: 'Enquire for Pricing',
-    image: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=2070&auto=format&fit=crop',
+    image: 'https://i.ibb.co/3m7Dx8s3/1-1-sound-healing.png',
     benefits: [
       'Emotional regulation and inner alignment',
       'Deep nervous-system work',
@@ -643,7 +654,7 @@ export const SERVICES: Service[] = [
       format: ['Private, personalised, in-studio/home studio sessions'],
       frequency: 'Weekly or bi-weekly recommended. 5–8 sessions suggested for deeper transformation. Single Sessions are available for reset/maintenance.',
       safety: {
-        note: 'Please consult before booking if you have:',
+        note: 'Please consult before booking if you:',
         conditions: [
           'Pacemaker',
           'Epilepsy',
@@ -663,7 +674,7 @@ export const SERVICES: Service[] = [
     fullDescription: "Whether you're gathering for relaxation, bonding, celebration, or emotional reset, a group sound healing session creates a calm, restorative space where everyone can unwind together and experience collective harmony.",
     duration: '75–90 mins',
     price: 'Custom Pricing',
-    image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=2070&auto=format&fit=crop',
+    image: 'https://i.ibb.co/Q7pBgVrw/private-group-sound-healing.png',
     benefits: [
       'Shared sound fields create a sense of unity',
       'Collective relaxation encourages deeper calm',
@@ -869,7 +880,7 @@ export const SERVICES: Service[] = [
     fullDescription: 'In-office or offsite sessions designed to reduce workplace stress, boost productivity and provide a collective moment of deep rest.',
     duration: '60–90 Minutes',
     price: 'Custom Quote',
-    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop',
+    image: 'https://i.ibb.co/21fHTCLf/corporate-sonud-healing-and-bath.png', 
     benefits: [
       'Reduced team burnout and exhaustion',
       'Enhanced collective focus and clarity',
@@ -917,7 +928,7 @@ export const SERVICES: Service[] = [
       ],
       format: [
         'Sound Bath (Group Session): Immersive journey for 10 to 100+ participants',
-        'Sound Healing (Focused Therapy): Best for smaller or team-specific groups (5–30)',
+        'Sound Healing (Focused Therapy): Best for small to mid-sized teams (5–30)',
         'Delivered at your office, chosen venue, or retreat location',
         'Can be done seated or lying down based on space availability'
       ],
@@ -949,7 +960,7 @@ export const SERVICES: Service[] = [
     fullDescription: 'The Sound Circle is a guided group experience where teams sit together in a circle and receive therapeutic sound vibrations, removing roles and rank to create instant psychological safety.',
     duration: '60–90 minutes',
     price: 'Custom Quote',
-    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop',
+    image: 'https://i.ibb.co/S4wPrLMm/team-harmony-sound-circle.png', 
     benefits: [
       'Shared Brainwave Synchronisation (Alpha & Theta)',
       'Removal of Hierarchy and Spotlight',
@@ -1134,7 +1145,70 @@ export const TEAM: TeamMember[] = [
 ];
 
 export const TESTIMONIALS: Testimonial[] = [
-  { id: '1', name: 'Sarah Jenkins', location: 'London', text: 'The most profound relaxation I have ever experienced.' },
-  { id: '2', name: 'Michael Chen', location: 'New York', text: 'Aumkaar\'s atmosphere is pure magic. The world slows down.' },
-  { id: '3', name: 'Elena Rossi', location: 'Milan', text: 'Gyandeep is a true master of vibrational therapy.' }
+  { 
+    id: 'anil-jain', 
+    name: 'Anil Jain', 
+    location: 'Group CFO and President - Finance', 
+    text: 'I walked in feeling mentally overloaded and walked out feeling lighter than I have in months. The sound felt like it reached places therapy couldn’t. Truly transformative.' 
+  },
+  { 
+    id: 'cn-rao', 
+    name: 'C N Rao', 
+    location: 'Former IFS (Indian Forest Service)', 
+    text: 'It was like my mind reset. The session helped me break a cycle of overthinking I was stuck in for weeks.' 
+  },
+  { 
+    id: 'ramana', 
+    name: 'Ramana', 
+    location: 'I.R.S, Deputy Commissioner of Income tax', 
+    text: 'The on-body vibrations were incredible. It felt like every cell was exhaling. My back pain eased, and my mind went completely still.' 
+  },
+  { 
+    id: 'puneet-agarwal', 
+    name: 'Puneet Agarwal', 
+    location: 'MD Sweet World Group', 
+    text: 'I’ve tried many therapies for stress, but this one shifted something instantly. The relaxation was deep yet effortless.' 
+  },
+  { 
+    id: 'vrinda-jaiswal', 
+    name: 'Vrinda Jaiswal', 
+    location: 'CA CS LLB', 
+    text: 'For years, I tried to ‘control’ my thoughts. Nothing worked. Mind Management taught me how my mind actually functions and how to work with it instead of against it.' 
+  },
+  { 
+    id: 'praveen-chhaperia', 
+    name: 'Praveen Chhaperia', 
+    location: 'MD Chapperia Industries', 
+    text: 'The visualisation during the sound journey was powerful. It felt like the sound carried my intention deeper into my mind.' 
+  },
+  { 
+    id: 'vikas-agarwal', 
+    name: 'Vikas Agarwal', 
+    location: 'MD Micks', 
+    text: 'I’ve done manifestation workshops before, but this is the only one where I felt something shift instantly.' 
+  },
+  { 
+    id: 'surabhi-jaiswal', 
+    name: 'Surabhi Jaiswal', 
+    location: 'Assistant Director, Ministry of Home Affairs', 
+    text: 'I finally understood how to manage my overthinking instead of being controlled by it.' 
+  },
+  { 
+    id: 'sumedha-ghuliani', 
+    name: 'Sumedha Ghuliani', 
+    location: 'AI Strategist Google', 
+    text: 'It was the first time in years my mind stopped racing. This is my go-to therapy now.' 
+  },
+  { 
+    id: 'paras-sirohia', 
+    name: 'Paras Sirohia', 
+    location: 'MD Cruise AC', 
+    text: 'I wasn’t prepared for how powerful the vibration would feel. When the bowls were placed on my back and stomach, the vibrations spread through my entire body, especially the areas where I usually carry stress.' 
+  },
+  { 
+    id: 'gurpreet-singh', 
+    name: 'Gurpreet Singh', 
+    location: 'Kundalini Expert', 
+    text: 'This was one of the most profound sessions I have experienced. The combination of beej mantra chanting, sound vibration and guided breathwork created a shift that I can’t fully explain.' 
+  }
 ];

@@ -1,9 +1,13 @@
+
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { SERVICES, FALLBACK_IMAGE } from '../constants';
+import { FALLBACK_IMAGE } from '../constants';
 import { ArrowRight, Clock, Banknote, Star } from 'lucide-react';
+import { dataService } from '../services/dataService';
 
 const Services: React.FC = () => {
+  const services = dataService.getServices();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -30,7 +34,7 @@ const Services: React.FC = () => {
 
         {/* Sessions Grid - 2 columns on tablets, 3 on large desktop */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-8 md:gap-x-12 lg:gap-x-16 gap-y-20 md:gap-y-24">
-          {SERVICES.map((service) => (
+          {services.map((service) => (
             <div key={service.id} className="group flex flex-col relative">
               
               {/* Image Container */}

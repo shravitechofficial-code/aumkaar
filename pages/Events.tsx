@@ -1,15 +1,20 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { EVENTS, FALLBACK_IMAGE } from '../constants';
-import { Calendar, MapPin, Clock, ArrowRight } from 'lucide-react';
+import { FALLBACK_IMAGE } from '../constants';
+import { dataService } from '../services/dataService';
+import { Calendar, MapPin, Clock } from 'lucide-react';
+import { Event as CalendarEvent } from '../types';
 
 const Events: React.FC = () => {
+  const [events, setEvents] = useState<CalendarEvent[]>([]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    setEvents(dataService.getEvents());
   }, []);
 
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const target = e.currentTarget;
     if (target.src !== FALLBACK_IMAGE) {
       target.src = FALLBACK_IMAGE;
@@ -20,7 +25,6 @@ const Events: React.FC = () => {
     <div className="bg-[#FDFBF7] min-h-screen pt-40 md:pt-48 pb-24 md:pb-40">
       <div className="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 xl:px-24">
         
-        {/* Page Header */}
         <div className="text-center mb-24 md:mb-32">
           <span className="text-[#A05035] font-bold tracking-[0.5em] text-xs uppercase block mb-8">Sacred Gatherings</span>
           <h1 className="text-4xl md:text-6xl lg:text-8xl font-serif text-[#3E2723] mb-8 leading-tight">Upcoming Rituals</h1>
@@ -29,12 +33,10 @@ const Events: React.FC = () => {
           </p>
         </div>
 
-        {/* Events Feed */}
         <div className="space-y-32">
-          {EVENTS.map((event, idx) => (
+          {events.map((event, idx) => (
             <div key={event.id} className={`flex flex-col ${idx % 2 !== 0 ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-12 lg:gap-24 items-center`}>
               
-              {/* Event Image */}
               <div className="w-full lg:w-1/2 group">
                 <Link to={`/event/${event.id}`} className="block relative aspect-[4/3] overflow-hidden shadow-2xl border border-[#A05035]/10 bg-[#3E2723]">
                   <img 
@@ -52,7 +54,6 @@ const Events: React.FC = () => {
                 </Link>
               </div>
 
-              {/* Event Info */}
               <div className="w-full lg:w-1/2 space-y-8">
                 <div>
                   <div className="flex items-center gap-4 text-[#A05035] font-bold tracking-[0.3em] text-[10px] uppercase mb-6">
@@ -93,7 +94,6 @@ const Events: React.FC = () => {
           ))}
         </div>
 
-        {/* Private Event CTA */}
         <div className="mt-40 md:mt-56 bg-[#F4EFE6] p-12 md:p-24 lg:p-32 text-center border border-[#A05035]/5">
            <span className="text-[#A05035] font-bold tracking-[0.5em] text-[10px] uppercase block mb-8">Bespoke Circles</span>
            <h2 className="text-3xl md:text-5xl font-serif text-[#3E2723] mb-10 leading-tight">Planning a Private Group Experience?</h2>

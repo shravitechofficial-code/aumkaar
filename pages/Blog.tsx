@@ -1,12 +1,16 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BLOG_POSTS } from '../constants';
+import { dataService } from '../services/dataService';
 import { Clock, User, ArrowRight } from 'lucide-react';
+import { BlogPost } from '../types';
 
 const Blog: React.FC = () => {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    setPosts(dataService.getBlogs());
   }, []);
 
   return (
@@ -21,7 +25,7 @@ const Blog: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-20">
-          {BLOG_POSTS.map((post) => (
+          {posts.map((post) => (
             <Link key={post.id} to={`/blog/${post.id}`} className="group block">
               <div className="relative aspect-video overflow-hidden mb-10 shadow-xl border border-[#A05035]/10 transform transition-transform duration-700 group-hover:-translate-y-2">
                 <img 

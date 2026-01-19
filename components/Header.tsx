@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { NAV_ITEMS } from '../constants';
 import { LOGOS } from '../assets/logos';
+import { dataService } from '../services/dataService';
 
 const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -30,12 +31,14 @@ const Header: React.FC = () => {
   const headerPadding = scrolled ? 'py-3' : 'py-5 md:py-6';
   
   const getHeaderBg = () => {
+    if (isMobileMenuOpen) return 'bg-[#FDFBF7]';
     if (scrolled) return 'bg-[#FDFBF7] shadow-[0_4px_30px_rgba(0,0,0,0.06)]';
     if (isHome) return 'bg-transparent';
     return 'bg-[#FDFBF7]';
   };
 
   const getTextColor = () => {
+    if (isMobileMenuOpen) return 'text-[#3E2723]';
     if (scrolled) return 'text-[#3E2723]';
     if (isHome) return 'text-[#FDFBF7]';
     return 'text-[#3E2723]';
@@ -46,9 +49,7 @@ const Header: React.FC = () => {
   };
 
   // Determine which logo to show
-  // White logo on dark: Home page top
-  // Brown logo: Scrolled or non-home pages
-  const currentLogo = (isHome && !scrolled) ? LOGOS.ON_DARK : LOGOS.ON_LIGHT;
+  const currentLogo = (isHome && !scrolled && !isMobileMenuOpen) ? LOGOS.ON_DARK : LOGOS.ON_LIGHT;
 
   return (
     <header 
@@ -57,7 +58,7 @@ const Header: React.FC = () => {
       <div className="max-w-[1536px] mx-auto px-6 sm:px-10 xl:px-16">
         <div className="flex justify-between items-center">
           
-          {/* Brand Logo Image - Increased size by 20% */}
+          {/* Brand Logo Image */}
           <Link to="/" className="transition-all duration-300 transform hover:opacity-80">
             <img 
               src={currentLogo} 
@@ -120,11 +121,7 @@ const Header: React.FC = () => {
             
             <Link 
               to="/contact" 
-              className={`ml-4 xl:ml-8 px-7 py-3 text-[10px] font-bold tracking-[0.3em] rounded-full transition-all duration-300 shadow-lg whitespace-nowrap ${
-                scrolled 
-                  ? 'bg-[#A05035] text-[#FDFBF7] hover:bg-[#3E2723]' 
-                  : (isHome ? 'bg-[#FDFBF7] text-[#A05035] hover:bg-white' : 'bg-[#A05035] text-[#FDFBF7]')
-              }`}
+              className={`ml-4 xl:ml-8 px-7 py-3 text-[10px] font-bold tracking-[0.3em] rounded-full transition-all duration-300 shadow-lg whitespace-nowrap btn-texture text-[#FDFBF7] hover:text-white`}
             >
               CONTACT US
             </Link>
@@ -132,7 +129,7 @@ const Header: React.FC = () => {
 
           {/* Mobile Menu Toggle */}
           <button 
-            className={`xl:hidden focus:outline-none p-2 transition-transform active:scale-90 ${getTextColor()}`}
+            className={`xl:hidden focus:outline-none p-2 transition-transform active:scale-90 relative z-[60] ${getTextColor()}`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle Menu"
           >
@@ -143,19 +140,31 @@ const Header: React.FC = () => {
 
       {/* Mobile Menu Overlay */}
       <div 
-        className={`xl:hidden fixed inset-0 top-0 left-0 w-full h-screen bg-[#FDFBF7] transition-all duration-500 ease-in-out z-[-1] overflow-y-auto ${
+        className={`xl:hidden fixed inset-0 top-0 left-0 w-full h-screen bg-[#FDFBF7] transition-all duration-500 ease-in-out z-[50] overflow-y-auto ${
           isMobileMenuOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-full'
         }`}
       >
-        <div className="px-10 pt-32 pb-20 space-y-6 max-w-lg mx-auto md:max-w-xl text-center">
-          <img src={LOGOS.SYMBOL} alt="Aumkaar Symbol" className="h-14 mx-auto mb-10 opacity-30" />
+        <div className="px-10 pt-24 pb-20 space-y-3 max-w-lg mx-auto md:max-w-xl text-center">
+          <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="block mb-6 transition-transform active:scale-95">
+            <img src={LOGOS.SYMBOL} alt="Aumkaar Symbol" className="h-20 mx-auto opacity-40" />
+          </Link>
           
+          <div className="pb-6">
+             <Link 
+              to="/contact" 
+              className="block w-full text-center px-8 py-4 text-[#FDFBF7] text-xs font-bold tracking-[0.4em] rounded-full shadow-xl active:scale-95 transition-transform uppercase btn-texture"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              CONTACT US
+            </Link>
+          </div>
+
           {NAV_ITEMS.map((item, i) => (
-            <div key={item.label} className="border-b border-[#3E2723]/5 last:border-0 pb-4">
+            <div key={item.label} className="border-b border-[#3E2723]/5 last:border-0 pb-2">
               {item.submenu ? (
                 <button
                   onClick={() => toggleMobileSubmenu(item.label)}
-                  className="flex items-center justify-between w-full text-left py-2"
+                  className="flex items-center justify-center gap-3 w-full text-center py-2"
                 >
                   <span className={`text-2xl md:text-3xl font-serif transition-colors ${expandedMobileMenu === item.label ? 'text-[#A05035]' : 'text-[#3E2723]'}`}>
                     {item.label}
@@ -168,7 +177,7 @@ const Header: React.FC = () => {
               ) : (
                 <Link
                   to={item.path || '/'}
-                  className="block text-2xl md:text-3xl font-serif text-[#3E2723] py-2"
+                  className="block text-2xl md:text-3xl font-serif text-[#3E2723] py-2 text-center"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.label}
@@ -178,13 +187,13 @@ const Header: React.FC = () => {
               {item.submenu && (
                 <div 
                   className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                    expandedMobileMenu === item.label ? 'max-h-[1000px] opacity-100 mt-4 mb-2' : 'max-h-0 opacity-0'
+                    expandedMobileMenu === item.label ? 'max-h-[1000px] opacity-100 mt-2 mb-2' : 'max-h-0 opacity-0'
                   }`}
                 >
-                  <div className="pl-4 space-y-4 pt-1 border-l-2 border-[#A05035]/20 text-left">
+                  <div className="space-y-3 pt-1 text-center">
                     {item.submenu.map((subItem, idx) => (
                       subItem.isHeader ? (
-                        <div key={idx} className="text-[10px] md:text-xs font-bold text-[#A05035]/50 uppercase tracking-[0.3em] pt-4 first:pt-0">
+                        <div key={idx} className="text-[10px] md:text-xs font-bold text-[#A05035]/50 uppercase tracking-[0.3em] pt-2 first:pt-0">
                           {subItem.label}
                         </div>
                       ) : (
@@ -203,15 +212,6 @@ const Header: React.FC = () => {
               )}
             </div>
           ))}
-          <div className="pt-10">
-             <Link 
-              to="/contact" 
-              className="block w-full text-center px-8 py-5 bg-[#A05035] text-[#FDFBF7] text-xs font-bold tracking-[0.4em] rounded-full shadow-xl active:scale-95 transition-transform uppercase"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              CONTACT US
-            </Link>
-          </div>
         </div>
       </div>
     </header>
