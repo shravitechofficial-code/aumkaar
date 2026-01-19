@@ -1,16 +1,20 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { BLOG_POSTS } from '../constants';
+import { dataService } from '../services/dataService';
 import { ArrowLeft, Clock, User, Share2 } from 'lucide-react';
+import { BlogPost } from '../types';
 
 const BlogPostDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const post = BLOG_POSTS.find(p => p.id === id);
+  const [post, setPost] = useState<BlogPost | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    const blogs = dataService.getBlogs();
+    const found = blogs.find(p => p.id === id);
+    if (found) setPost(found);
   }, [id]);
 
   if (!post) {
@@ -56,7 +60,15 @@ const BlogPostDetail: React.FC = () => {
               <div className="flex items-center gap-2 text-xs uppercase tracking-widest font-bold">
                 <Clock size={16} /> {post.readTime}
               </div>
-              <button className="hover:text-[#A05035] transition-colors">
+              <button 
+                onClick={() => {
+                  navigator.share?.({
+                    title: post.title,
+                    url: window.location.href
+                  }).catch(() => alert("URL copied to clipboard!"));
+                }}
+                className="hover:text-[#A05035] transition-colors"
+              >
                 <Share2 size={18} />
               </button>
             </div>
@@ -69,9 +81,10 @@ const BlogPostDetail: React.FC = () => {
         </div>
 
         {/* Article Body */}
-        <article className="prose prose-stone max-w-none prose-p:text-xl prose-p:font-light prose-p:leading-loose prose-p:text-[#3E2723]/90 prose-headings:font-serif prose-headings:text-[#3E2723]">
-          {post.content}
-        </article>
+        <article 
+          className="prose prose-stone max-w-none prose-p:text-xl prose-p:font-light prose-p:leading-loose prose-p:text-[#3E2723]/90 prose-headings:font-serif prose-headings:text-[#3E2723]"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
 
         {/* Footer CTA */}
         <footer className="mt-24 pt-24 border-t border-[#A05035]/10 text-center">

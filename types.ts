@@ -60,7 +60,7 @@ export interface BlogPost {
   author: string;
   category: string;
   excerpt: string;
-  content: React.ReactNode;
+  content: string; // Changed from React.ReactNode to string (HTML)
   image: string;
   readTime: string;
 }

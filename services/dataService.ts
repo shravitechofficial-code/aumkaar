@@ -9,7 +9,8 @@ const STORAGE_KEYS = {
   BLOGS: 'aumkaar_blogs',
   EVENTS: 'aumkaar_events',
   FREEBIE: 'aumkaar_freebie_link',
-  SERVICE_IMAGES: 'aumkaar_service_images'
+  SERVICE_IMAGES: 'aumkaar_service_images',
+  AUTH: 'aumkaar_admin_auth'
 };
 
 // Initial Defaults (Fallback data if database is empty or unreachable)
@@ -31,6 +32,11 @@ const DEFAULT_REELS = [
 
 const DEFAULT_FREEBIE = 'https://drive.google.com/file/d/1EnCTs5Ixe1j1U9m9j98x8pULIL_1cGqP/view?usp=sharing';
 
+const DEFAULT_AUTH = {
+  id: 'aumkaar_admin_jan2026',
+  password: 'password'
+};
+
 export const dataService = {
   // Global initializer to sync local state with Database
   init: async () => {
@@ -43,7 +49,6 @@ export const dataService = {
       const remoteData = await response.json();
       
       // Update local storage cache if data exists in database
-      // If remoteData is empty object {}, it means DB is fresh, so we keep defaults.
       if (remoteData && typeof remoteData === 'object' && Object.keys(remoteData).length > 0) {
         if (remoteData.youtube) localStorage.setItem(STORAGE_KEYS.YOUTUBE, JSON.stringify(remoteData.youtube));
         if (remoteData.reels) localStorage.setItem(STORAGE_KEYS.REELS, JSON.stringify(remoteData.reels));
@@ -51,6 +56,7 @@ export const dataService = {
         if (remoteData.events) localStorage.setItem(STORAGE_KEYS.EVENTS, JSON.stringify(remoteData.events));
         if (remoteData.freebie) localStorage.setItem(STORAGE_KEYS.FREEBIE, remoteData.freebie);
         if (remoteData.serviceImages) localStorage.setItem(STORAGE_KEYS.SERVICE_IMAGES, JSON.stringify(remoteData.serviceImages));
+        if (remoteData.auth) localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(remoteData.auth));
       }
       
       return true;
@@ -71,11 +77,10 @@ export const dataService = {
         blogs: dataService.getBlogs(),
         events: dataService.getEvents(),
         freebie: dataService.getFreebieLink(),
-        serviceImages: dataService.getServiceImageOverrides()
+        serviceImages: dataService.getServiceImageOverrides(),
+        auth: dataService.getAuth()
       };
 
-      // Sending to Apps Script using mode: 'no-cors' for POST
-      // This works for simple updates but doesn't allow reading the response status easily
       await fetch(DATA_API_URL, {
         method: 'POST',
         mode: 'no-cors',
@@ -88,6 +93,15 @@ export const dataService = {
       console.error('Database sync failed:', error);
       return false;
     }
+  },
+
+  // Auth Management
+  getAuth: () => {
+    const saved = localStorage.getItem(STORAGE_KEYS.AUTH);
+    return saved ? JSON.parse(saved) : DEFAULT_AUTH;
+  },
+  setAuth: (auth: typeof DEFAULT_AUTH) => {
+    localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(auth));
   },
 
   // YouTube

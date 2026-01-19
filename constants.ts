@@ -1085,22 +1085,24 @@ export const BLOG_POSTS: BlogPost[] = [
     readTime: '6 min read',
     excerpt: 'Explore how simple stillness can reshape your brain, reduce stress, and restore emotional clarity in a noisy world.',
     image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1000&auto=format&fit=crop',
-    content: React.createElement('div', { className: "space-y-6" },
-      React.createElement('p', null, "In a world that demands our attention every second, silence has become a luxury. We are constantly \"on\"—responding to notifications, managing expectations, and navigating a landscape of information overload. But what happens to the brain when we finally stop?"),
-      React.createElement('h3', { className: "text-2xl font-serif text-[#A05035] mt-8" }, "The Neurobiology of Calm"),
-      React.createElement('p', null, "Modern neuroscience shows that meditation isn't just \"relaxing.\" It actually changes the physical structure of your brain. Regular practice has been linked to increased gray matter in the prefrontal cortex—the area responsible for executive function, decision-making, and emotional regulation."),
-      React.createElement('blockquote', { className: "border-l-4 border-[#A05035] pl-6 py-2 italic text-2xl font-serif text-[#3E2723]/70 my-10" }, 
-        "\"The goal of meditation isn't to control your thoughts, it's to stop letting them control you.\""
-      ),
-      React.createElement('h3', { className: "text-2xl font-serif text-[#A05035]" }, "Beyond Stress Reduction"),
-      React.createElement('p', null, "While stress reduction is the most commonly cited benefit, meditation offers deeper rewards:"),
-      React.createElement('ul', { className: "list-disc pl-6 space-y-3" },
-        React.createElement('li', null, React.createElement('strong', null, "Emotional Resilience:"), " Learning to observe emotions without being consumed by them."),
-        React.createElement('li', null, React.createElement('strong', null, "Improved Focus:"), " Training the brain to stay present in a distracted age."),
-        React.createElement('li', null, React.createElement('strong', null, "Better Sleep:"), " Calming the nervous system before rest to improve sleep architecture.")
-      ),
-      React.createElement('p', null, "At Aumkaar, we believe that mind management is a daily hygiene. Just as we wash our bodies, we must clear the mental clutter that builds up through the day.")
-    )
+    content: `
+      <div class="space-y-6">
+        <p>In a world that demands our attention every second, silence has become a luxury. We are constantly "on"—responding to notifications, managing expectations, and navigating a landscape of information overload. But what happens to the brain when we finally stop?</p>
+        <h3 class="text-2xl font-serif text-[#A05035] mt-8">The Neurobiology of Calm</h3>
+        <p>Modern neuroscience shows that meditation isn't just "relaxing." It actually changes the physical structure of your brain. Regular practice has been linked to increased gray matter in the prefrontal cortex—the area responsible for executive function, decision-making, and emotional regulation.</p>
+        <blockquote class="border-l-4 border-[#A05035] pl-6 py-2 italic text-2xl font-serif text-[#3E2723]/70 my-10">
+          "The goal of meditation isn't to control your thoughts, it's to stop letting them control you."
+        </blockquote>
+        <h3 class="text-2xl font-serif text-[#A05035]">Beyond Stress Reduction</h3>
+        <p>While stress reduction is the most commonly cited benefit, meditation offers deeper rewards:</p>
+        <ul class="list-disc pl-6 space-y-3">
+          <li><strong>Emotional Resilience:</strong> Learning to observe emotions without being consumed by them.</li>
+          <li><strong>Improved Focus:</strong> Training the brain to stay present in a distracted age.</li>
+          <li><strong>Better Sleep:</strong> Calming the nervous system before rest to improve sleep architecture.</li>
+        </ul>
+        <p>At Aumkaar, we believe that mind management is a daily hygiene. Just as we wash our bodies, we must clear the mental clutter that builds up through the day.</p>
+      </div>
+    `
   },
   {
     id: 'power-of-sound',
@@ -1111,19 +1113,21 @@ export const BLOG_POSTS: BlogPost[] = [
     readTime: '5 min read',
     excerpt: 'Discover the ancient wisdom and modern physics behind vibrational therapy and how it interacts with the human body.',
     image: 'https://images.unsplash.com/photo-1512438248247-f0f2a5a8b7f0?q=80&w=1000&auto=format&fit=crop',
-    content: React.createElement('div', { className: "space-y-6" },
-      React.createElement('p', null, "Everything in the universe is in a state of vibration. From the furthest stars to the atoms in your body, everything has a frequency. When these frequencies fall out of harmony, we experience what we call \"dis-ease\" or stress."),
-      React.createElement('h3', { className: "text-2xl font-serif text-[#A05035] mt-8" }, "The Water Connection"),
-      React.createElement('p', null, "The human body is approximately 70% water. Sound travels four times faster through water than through air. When we use Himalayan singing bowls or gongs, the vibrations aren't just hitting your ears—they are physically moving through every cell of your body."),
-      React.createElement('p', null, "This creates a \"micro-massage\" for the internal organs and tissues, helping to release physical tension that the mind might not even be aware of."),
-      React.createElement('h3', { className: "text-2xl font-serif text-[#A05035]" }, "Brainwave Entrainment"),
-      React.createElement('p', null, "One of the most powerful aspects of sound healing is a process called entrainment. When the brain is exposed to a stable, harmonic frequency, it naturally attempts to match that frequency."),
-      React.createElement('ul', { className: "list-disc pl-6 space-y-3" },
-        React.createElement('li', null, React.createElement('strong', null, "Alpha States:"), " Relaxed, creative, and calm."),
-        React.createElement('li', null, React.createElement('strong', null, "Theta States:"), " Deep meditation, where the body's natural healing mechanisms are most active.")
-      ),
-      React.createElement('p', null, "For those who find traditional \"silent\" meditation difficult, sound healing provides a shortcut—a sonic anchor that holds the attention and gently guides the mind into a restorative state.")
-    )
+    content: `
+      <div class="space-y-6">
+        <p>Everything in the universe is in a state of vibration. From the furthest stars to the atoms in your body, everything has a frequency. When these frequencies fall out of harmony, we experience what we call "dis-ease" or stress.</p>
+        <h3 class="text-2xl font-serif text-[#A05035] mt-8">The Water Connection</h3>
+        <p>The human body is approximately 70% water. Sound travels four times faster through water than through air. When we use Himalayan singing bowls or gongs, the vibrations aren't just hitting your ears—they are physically moving through every cell of your body.</p>
+        <p>This creates a "micro-massage" for the internal organs and tissues, helping to release physical tension that the mind might not even be aware of.</p>
+        <h3 class="text-2xl font-serif text-[#A05035]">Brainwave Entrainment</h3>
+        <p>One of the most powerful aspects of sound healing is a process called entrainment. When the brain is exposed to a stable, harmonic frequency, it naturally attempts to match that frequency.</p>
+        <ul class="list-disc pl-6 space-y-3">
+          <li><strong>Alpha States:</strong> Relaxed, creative, and calm.</li>
+          <li><strong>Theta States:</strong> Deep meditation, where the body's natural healing mechanisms are most active.</li>
+        </ul>
+        <p>For those who find traditional "silent" meditation difficult, sound healing provides a shortcut—a sonic anchor that holds the attention and gently guides the mind into a restorative state.</p>
+      </div>
+    `
   }
 ];
 

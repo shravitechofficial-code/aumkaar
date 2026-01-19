@@ -1,11 +1,11 @@
 
-import React, { useState, useEffect } from 'react';
-import { Youtube, Instagram, BookOpen, Calendar, Gift, Save, Plus, Trash2, ArrowLeft, Lock, LogOut, User, Image as ImageIcon, Loader2 } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Youtube, Instagram, BookOpen, Calendar, Gift, Save, Plus, Trash2, ArrowLeft, Lock, LogOut, User, Image as ImageIcon, Loader2, ShieldCheck, Eye, EyeOff, Type, Heading1, Heading2, AlignLeft, Quote } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { dataService } from '../services/dataService';
 import { LOGOS } from '../assets/logos';
 
-type Section = 'youtube' | 'reels' | 'blogs' | 'events' | 'freebie' | 'services';
+type Section = 'youtube' | 'reels' | 'blogs' | 'events' | 'freebie' | 'services' | 'security';
 
 const Admin: React.FC = () => {
   // Auth State
@@ -13,6 +13,7 @@ const Admin: React.FC = () => {
   const [loginId, setLoginId] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [loginError, setLoginError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   // Panel State
   const [activeSection, setActiveSection] = useState<Section>('youtube');
@@ -22,8 +23,11 @@ const Admin: React.FC = () => {
   const [events, setEvents] = useState(dataService.getEvents());
   const [freebieLink, setFreebieLink] = useState(dataService.getFreebieLink());
   const [serviceOverrides, setServiceOverrides] = useState<Record<string, string>>(dataService.getServiceImageOverrides());
+  const [adminAuth, setAdminAuth] = useState(dataService.getAuth());
+  
   const [saveStatus, setSaveStatus] = useState<string | null>(null);
   const [isSyncing, setIsSyncing] = useState(false);
+  const [isPreviewMode, setIsPreviewMode] = useState(false);
 
   // For rendering service list
   const servicesList = dataService.getServices();
@@ -38,13 +42,14 @@ const Admin: React.FC = () => {
        setEvents(dataService.getEvents());
        setFreebieLink(dataService.getFreebieLink());
        setServiceOverrides(dataService.getServiceImageOverrides());
+       setAdminAuth(dataService.getAuth());
     });
   }, []);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simplified Admin ID and Password as per original request
-    if (loginId === 'aumkaar_admin_jan2026' && loginPassword === 'password') {
+    const currentCreds = dataService.getAuth();
+    if (loginId === currentCreds.id && loginPassword === currentCreds.password) {
       setIsLoggedIn(true);
       setLoginError(false);
     } else {
@@ -63,6 +68,7 @@ const Admin: React.FC = () => {
     dataService.setEvents(events);
     dataService.setFreebieLink(freebieLink);
     dataService.setServiceImageOverrides(serviceOverrides);
+    dataService.setAuth(adminAuth);
     
     // 2. Save to Remote Database
     const success = await dataService.syncToDatabase();
@@ -92,7 +98,19 @@ const Admin: React.FC = () => {
       }
       setReels([...reels, { url: '', title: '' }]);
     }
-    if (section === 'blogs') setBlogs([...blogs, { id: Date.now().toString(), title: 'New Post', date: new Date().toLocaleDateString(), author: 'Aumkaar', category: 'Mind Management', excerpt: '', content: '', image: '', readTime: '5 min' }]);
+    if (section === 'blogs') {
+      setBlogs([...blogs, { 
+        id: Date.now().toString(), 
+        title: 'New Post', 
+        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }), 
+        author: 'Aumkaar', 
+        category: 'Mind Management', 
+        excerpt: 'Summary of the article...', 
+        content: '<p>Start writing here...</p>', 
+        image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773', 
+        readTime: '5 min read' 
+      }]);
+    }
     if (section === 'events') setEvents([...events, { 
       id: Date.now().toString(), 
       title: 'New Event', 
@@ -115,6 +133,32 @@ const Admin: React.FC = () => {
     if (section === 'reels') setReels(reels.filter((_: any, i: number) => i !== index));
     if (section === 'blogs') setBlogs(blogs.filter((_: any, i: number) => i !== index));
     if (section === 'events') setEvents(events.filter((_: any, i: number) => i !== index));
+  };
+
+  const insertHtml = (idx: number, tag: string) => {
+    const textarea = document.getElementById(`blog-content-${idx}`) as HTMLTextAreaElement;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = textarea.value;
+    const selected = text.substring(start, end);
+    
+    let wrap = '';
+    switch(tag) {
+      case 'h2': wrap = `<h2 class="text-3xl font-serif text-[#A05035] mt-10 mb-6">${selected || 'Heading'}</h2>`; break;
+      case 'h3': wrap = `<h3 class="text-2xl font-serif text-[#A05035] mt-8 mb-4">${selected || 'Subheading'}</h3>`; break;
+      case 'p': wrap = `<p class="mb-6 leading-loose font-light text-xl">${selected || 'New paragraph text...'}</p>`; break;
+      case 'quote': wrap = `<blockquote class="border-l-4 border-[#A05035] pl-6 py-2 italic text-2xl font-serif text-[#3E2723]/70 my-10">"${selected || 'Inspiring quote here...'}"</blockquote>`; break;
+      case 'bold': wrap = `<strong>${selected || 'bold text'}</strong>`; break;
+      case 'italic': wrap = `<em>${selected || 'italic text'}</em>`; break;
+      default: wrap = selected;
+    }
+
+    const nextText = text.substring(0, start) + wrap + text.substring(end);
+    const nextBlogs = [...blogs];
+    nextBlogs[idx].content = nextText;
+    setBlogs(nextBlogs);
   };
 
   const handleServiceImageChange = (id: string, url: string) => {
@@ -167,15 +211,22 @@ const Admin: React.FC = () => {
                 <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#3E2723]/30" />
                 <input 
                   required
-                  type="password" 
+                  type={showPassword ? "text" : "password"}
                   placeholder="Password" 
-                  className="w-full bg-[#F4EFE6]/40 border-b border-[#A05035]/20 py-4 pl-12 pr-4 text-sm focus:outline-none focus:border-[#A05035] transition-all text-[#3E2723] placeholder-[#3E2723]/30"
+                  className="w-full bg-[#F4EFE6]/40 border-b border-[#A05035]/20 py-4 pl-12 pr-12 text-sm focus:outline-none focus:border-[#A05035] transition-all text-[#3E2723] placeholder-[#3E2723]/30"
                   value={loginPassword}
                   onChange={(e) => {
                     setLoginPassword(e.target.value);
                     setLoginError(false);
                   }}
                 />
+                <button 
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#3E2723]/30 hover:text-[#A05035]"
+                >
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
               </div>
             </div>
 
@@ -222,6 +273,7 @@ const Admin: React.FC = () => {
             { id: 'events', label: 'Upcoming Events', icon: Calendar },
             { id: 'services', label: 'Session Hero Images', icon: ImageIcon },
             { id: 'freebie', label: 'Freebie Link', icon: Gift },
+            { id: 'security', label: 'Security Settings', icon: ShieldCheck },
           ].map((item) => (
             <button
               key={item.id}
@@ -266,12 +318,22 @@ const Admin: React.FC = () => {
         )}
 
         <div className="max-w-4xl">
-          <header className="mb-12">
-            <h2 className="text-4xl md:text-5xl font-serif text-[#3E2723] capitalize">{activeSection.replace('-', ' ')}</h2>
-            <p className="text-[#3E2723]/60 mt-4 font-light">Manage the dynamic content shown on the public website. Changes are cached locally but must be "Published" to sync with the central database.</p>
+          <header className="mb-12 flex items-end justify-between">
+            <div>
+              <h2 className="text-4xl md:text-5xl font-serif text-[#3E2723] capitalize">{activeSection.replace('-', ' ')}</h2>
+              <p className="text-[#3E2723]/60 mt-4 font-light">Manage the dynamic content shown on the public website. Changes are cached locally but must be "Published" to sync with the central database.</p>
+            </div>
+            {activeSection === 'blogs' && (
+              <button 
+                onClick={() => setIsPreviewMode(!isPreviewMode)}
+                className={`px-6 py-3 text-[9px] font-bold tracking-widest uppercase border rounded-full transition-all ${isPreviewMode ? 'bg-[#A05035] text-white border-[#A05035]' : 'border-[#3E2723]/10 text-[#3E2723]/60 hover:bg-[#A05035]/5'}`}
+              >
+                {isPreviewMode ? 'Editing Mode' : 'Live Preview'}
+              </button>
+            )}
           </header>
 
-          {/* Section Renderers (Same as original but with updated logic) */}
+          {/* YouTube Section */}
           {activeSection === 'youtube' && (
             <div className="space-y-8">
               {youtubeLinks.map((video: any, idx: number) => (
@@ -339,43 +401,135 @@ const Admin: React.FC = () => {
             </div>
           )}
 
-          {/* Section: Blogs */}
+          {/* Enhanced Blogs Section */}
           {activeSection === 'blogs' && (
-            <div className="space-y-8">
+            <div className="space-y-16">
               {blogs.map((post: any, idx: number) => (
-                <div key={idx} className="bg-white p-8 border border-[#A05035]/10 shadow-sm relative group space-y-4">
-                  <button onClick={() => removeItem('blogs', idx)} className="absolute top-4 right-4 text-[#A05035] opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 size={18} /></button>
-                  <div className="grid grid-cols-2 gap-4">
-                    <input className="text-xl font-serif text-[#3E2723] focus:outline-none" value={post.title} onChange={(e) => {
-                      const next = [...blogs];
-                      next[idx].title = e.target.value;
-                      setBlogs(next);
-                    }} />
-                    <input className="text-xs text-[#3E2723]/40 uppercase tracking-widest text-right focus:outline-none" value={post.date} onChange={(e) => {
-                      const next = [...blogs];
-                      next[idx].date = e.target.value;
-                      setBlogs(next);
-                    }} />
+                <div key={idx} className="bg-white border border-[#A05035]/10 shadow-sm relative group overflow-hidden">
+                  <button 
+                    onClick={() => removeItem('blogs', idx)} 
+                    className="absolute top-6 right-6 text-[#A05035] opacity-0 group-hover:opacity-100 transition-opacity z-10 p-2 hover:bg-red-50 rounded-full"
+                  >
+                    <Trash2 size={20} />
+                  </button>
+
+                  <div className="p-8 md:p-10 space-y-8">
+                    {/* Header Metadata */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 border-b border-[#A05035]/5 pb-8">
+                      <div className="md:col-span-2 space-y-2">
+                        <label className="block text-[9px] font-bold text-[#A05035] uppercase tracking-[0.3em]">Article Title</label>
+                        <input 
+                          className="w-full text-2xl font-serif text-[#3E2723] focus:outline-none bg-transparent placeholder-[#3E2723]/20" 
+                          value={post.title} 
+                          onChange={(e) => {
+                            const next = [...blogs];
+                            next[idx].title = e.target.value;
+                            setBlogs(next);
+                          }} 
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="block text-[9px] font-bold text-[#A05035] uppercase tracking-[0.3em]">Publish Date</label>
+                        <input 
+                          className="w-full text-xs text-[#3E2723]/60 uppercase tracking-widest focus:outline-none bg-transparent" 
+                          value={post.date} 
+                          onChange={(e) => {
+                            const next = [...blogs];
+                            next[idx].date = e.target.value;
+                            setBlogs(next);
+                          }} 
+                        />
+                      </div>
+                    </div>
+
+                    {/* Excerpt and Image */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <div className="space-y-2">
+                        <label className="block text-[9px] font-bold text-[#A05035] uppercase tracking-[0.3em]">Hero Image URL</label>
+                        <div className="flex gap-4 items-center">
+                          <div className="w-16 h-16 bg-[#FDFBF7] border border-[#A05035]/10 rounded-sm overflow-hidden shrink-0">
+                            <img src={post.image} alt="Preview" className="w-full h-full object-cover" />
+                          </div>
+                          <input 
+                            className="w-full text-[10px] text-[#3E2723]/60 focus:outline-none bg-transparent border-b border-[#A05035]/10 py-2" 
+                            value={post.image} 
+                            placeholder="https://images.unsplash.com/..." 
+                            onChange={(e) => {
+                              const next = [...blogs];
+                              next[idx].image = e.target.value;
+                              setBlogs(next);
+                            }} 
+                          />
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <label className="block text-[9px] font-bold text-[#A05035] uppercase tracking-[0.3em]">Article Excerpt (Teaser)</label>
+                        <textarea 
+                          className="w-full text-sm text-[#3E2723]/70 font-light bg-[#FDFBF7] p-3 h-16 focus:outline-none border border-[#A05035]/5 resize-none" 
+                          value={post.excerpt} 
+                          onChange={(e) => {
+                            const next = [...blogs];
+                            next[idx].excerpt = e.target.value;
+                            setBlogs(next);
+                          }} 
+                        />
+                      </div>
+                    </div>
+
+                    {/* Rich Text Area */}
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <label className="block text-[9px] font-bold text-[#A05035] uppercase tracking-[0.3em]">Article Content (Rich Text)</label>
+                        <div className="flex gap-2">
+                          {[
+                            { tag: 'h2', icon: <Heading1 size={14} />, label: 'Heading' },
+                            { tag: 'h3', icon: <Heading2 size={14} />, label: 'Sub' },
+                            { tag: 'p', icon: <AlignLeft size={14} />, label: 'Para' },
+                            { tag: 'quote', icon: <Quote size={14} />, label: 'Quote' },
+                            { tag: 'bold', icon: <span className="font-bold">B</span>, label: 'Bold' },
+                            { tag: 'italic', icon: <span className="italic">I</span>, label: 'Italic' },
+                          ].map(btn => (
+                            <button
+                              key={btn.tag}
+                              onClick={() => insertHtml(idx, btn.tag)}
+                              className="p-2 bg-[#FDFBF7] border border-[#A05035]/10 text-[#3E2723] hover:bg-[#A05035] hover:text-white transition-all rounded-md flex items-center gap-1.5"
+                              title={btn.label}
+                            >
+                              {btn.icon}
+                              <span className="text-[8px] font-bold uppercase tracking-widest hidden lg:inline">{btn.label}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      {isPreviewMode ? (
+                        <div 
+                          className="w-full min-h-[400px] p-10 bg-[#FDFBF7] border border-[#A05035]/10 prose prose-stone max-w-none prose-p:text-xl prose-p:font-light prose-p:leading-loose prose-p:text-[#3E2723]/90 prose-headings:font-serif prose-headings:text-[#3E2723]"
+                          dangerouslySetInnerHTML={{ __html: post.content }}
+                        />
+                      ) : (
+                        <textarea 
+                          id={`blog-content-${idx}`}
+                          className="w-full min-h-[400px] text-sm font-mono text-[#3E2723]/80 bg-[#FDFBF7] p-8 focus:outline-none border border-[#A05035]/10 leading-relaxed rounded-md" 
+                          value={post.content} 
+                          onChange={(e) => {
+                            const next = [...blogs];
+                            next[idx].content = e.target.value;
+                            setBlogs(next);
+                          }} 
+                        />
+                      )}
+                    </div>
                   </div>
-                  <textarea className="w-full text-sm text-[#3E2723]/70 font-light bg-[#FDFBF7] p-4 h-24 focus:outline-none" value={post.excerpt} placeholder="Excerpt" onChange={(e) => {
-                    const next = [...blogs];
-                    next[idx].excerpt = e.target.value;
-                    setBlogs(next);
-                  }} />
-                  <input className="w-full text-[10px] text-[#A05035] uppercase tracking-widest focus:outline-none" value={post.image} placeholder="Image URL" onChange={(e) => {
-                    const next = [...blogs];
-                    next[idx].image = e.target.value;
-                    setBlogs(next);
-                  }} />
                 </div>
               ))}
-              <button onClick={() => addItem('blogs')} className="w-full border-2 border-dashed border-[#A05035]/20 p-8 text-[#A05035] flex items-center justify-center gap-3 hover:bg-[#A05035]/5 transition-all uppercase text-[10px] font-bold tracking-widest">
-                <Plus size={20} /> Add Blog Post
+              <button onClick={() => addItem('blogs')} className="w-full border-2 border-dashed border-[#A05035]/20 p-12 text-[#A05035] flex items-center justify-center gap-4 hover:bg-[#A05035]/5 transition-all uppercase text-[11px] font-bold tracking-[0.4em]">
+                <Plus size={24} /> Create New Journal Article
               </button>
             </div>
           )}
 
-          {/* Section: Events */}
+          {/* Events Section */}
           {activeSection === 'events' && (
             <div className="space-y-12">
               {events.map((ev: any, idx: number) => (
@@ -441,7 +595,7 @@ const Admin: React.FC = () => {
             </div>
           )}
 
-          {/* Section: Services Hero Images */}
+          {/* Services Hero Images Section */}
           {activeSection === 'services' && (
             <div className="space-y-10">
               {servicesList.map((service) => (
@@ -476,7 +630,7 @@ const Admin: React.FC = () => {
             </div>
           )}
 
-          {/* Section: Freebie */}
+          {/* Freebie Section */}
           {activeSection === 'freebie' && (
             <div className="bg-white p-12 border border-[#A05035]/10 shadow-sm space-y-8">
               <div>
@@ -487,6 +641,51 @@ const Admin: React.FC = () => {
                   onChange={(e) => setFreebieLink(e.target.value)} 
                   placeholder="https://drive.google.com/..."
                 />
+              </div>
+            </div>
+          )}
+
+          {/* Security Section */}
+          {activeSection === 'security' && (
+            <div className="bg-white p-12 border border-[#A05035]/10 shadow-sm space-y-12">
+              <div className="space-y-8">
+                <div>
+                  <label className="block text-[11px] font-bold text-[#A05035] uppercase tracking-widest mb-4">Admin Username (ID)</label>
+                  <div className="relative">
+                    <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#3E2723]/30" />
+                    <input 
+                      className="w-full bg-[#FDFBF7] py-5 pl-12 pr-4 text-lg font-serif text-[#3E2723] focus:outline-none focus:border-[#A05035] border border-[#3E2723]/10" 
+                      value={adminAuth.id} 
+                      onChange={(e) => setAdminAuth({ ...adminAuth, id: e.target.value })} 
+                      placeholder="Enter new Admin ID"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-[#A05035] uppercase tracking-widest mb-4">Admin Password</label>
+                  <div className="relative">
+                    <Lock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#3E2723]/30" />
+                    <input 
+                      type={showPassword ? "text" : "password"}
+                      className="w-full bg-[#FDFBF7] py-5 pl-12 pr-12 text-lg font-serif text-[#3E2723] focus:outline-none focus:border-[#A05035] border border-[#3E2723]/10" 
+                      value={adminAuth.password} 
+                      onChange={(e) => setAdminAuth({ ...adminAuth, password: e.target.value })} 
+                      placeholder="Enter new password"
+                    />
+                    <button 
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-[#3E2723]/30 hover:text-[#A05035]"
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div className="p-6 bg-[#A05035]/5 border-l-4 border-[#A05035]">
+                <p className="text-sm text-[#3E2723]/70 leading-relaxed">
+                  <strong>Important:</strong> Changing these values will update your login credentials for this device and others once you <strong>Publish to Site</strong>. Ensure you remember your new credentials before signing out.
+                </p>
               </div>
             </div>
           )}
