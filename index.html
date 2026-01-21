@@ -3,39 +3,46 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#FDFBF7" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta name="theme-color" content="#3E2723" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    
+    <!-- Deployment Canonical -->
+    <link rel="canonical" href="https://aumkaar.com/" />
     
     <!-- Primary SEO Meta Tags -->
-    <title>Aumkaar | Sanctuary for Sound Healing & Mind Management</title>
+    <title>Aumkaar | Sound Healing, Meditation & Mind Management</title>
     <meta name="title" content="Aumkaar | Sound Healing, Meditation & Mind Management" />
     <meta name="description" content="Discover deep rest through Sound Healing, Tibetan Sound Spa, and Mind Management at Aumkaar. A holistic one-stop solution for stress, sleep disorders, and anxiety." />
-    <meta name="keywords" content="sound healing, meditation, stress relief, anxiety solution, sleep disorder help, mind management, aumkaar, that meditation couple" />
+    <meta name="keywords" content="sound healing hyderabad, meditation center, stress relief, anxiety solution, sleep disorder help, mind management, aumkaar wellness, that meditation couple" />
     <meta name="author" content="Aumkaar Wellness" />
-    <link rel="canonical" href="https://aumkaar.com/" />
 
     <!-- Social Meta Tags (Open Graph / Facebook) -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://aumkaar.com/" />
-    <meta property="og:title" content="Aumkaar | One Stop Solution for Stress & Anxiety" />
-    <meta property="og:description" content="Experience the ancient wisdom of sound. A sanctuary where vibration shifts inner states and restores natural harmony." />
+    <meta property="og:title" content="Aumkaar | Sanctuary for Sound & Silence" />
+    <meta property="og:description" content="A sanctuary where vibration shifts inner states and restores natural harmony. Experience the resonance of peace." />
     <meta property="og:image" content="https://i.ibb.co/XZVGhG2h/Aumkaar-20260112-161626-0000.png" />
 
     <!-- Social Meta Tags (Twitter) -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://aumkaar.com/" />
-    <meta property="twitter:title" content="Aumkaar | Sound Healing & Meditation" />
+    <meta property="twitter:title" content="Aumkaar | One Stop Solution for Stress & Anxiety" />
     <meta property="twitter:description" content="A sanctuary where sound becomes medicine and silence becomes home." />
     <meta property="twitter:image" content="https://i.ibb.co/XZVGhG2h/Aumkaar-20260112-161626-0000.png" />
 
-    <!-- Favicon & PWA Icons -->
+    <!-- Favicon & Icons -->
     <link rel="icon" href="https://i.ibb.co/XZVGhG2h/Aumkaar-20260112-161626-0000.png" type="image/png" />
     <link rel="apple-touch-icon" href="https://i.ibb.co/XZVGhG2h/Aumkaar-20260112-161626-0000.png" />
 
-    <!-- Critical Fonts Loading -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Performance: Preconnect to Font CDNs -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://aistudiocdn.com">
+    
+    <!-- Tailwind & Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     
     <style>
@@ -54,6 +61,7 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-rendering: optimizeLegibility;
+        overflow-x: hidden;
       }
 
       h1, h2, h3, h4, h5, h6 {
@@ -66,7 +74,7 @@
         font-style: italic;
       }
 
-      /* Animated Heading Reveal */
+      /* Premium Typography Reveal Animation */
       @keyframes rise-reveal {
         0% {
           opacity: 0;
@@ -109,11 +117,11 @@
 
       .btn-texture:hover {
         background-color: #B5654A;
-        transform: scale(1.02);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        transform: translateY(-2px);
+        box-shadow: 0 15px 30px rgba(160, 80, 53, 0.2);
       }
 
-      /* Optimize scrolling performance */
+      /* Scrollbar Customization */
       * {
         scrollbar-width: thin;
         scrollbar-color: var(--color-clay) var(--color-sand);
