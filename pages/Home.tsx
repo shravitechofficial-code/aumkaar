@@ -114,7 +114,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="w-full bg-[#FDFBF7]">
-      {/* Rebuilt Hero Section - Fixed Video Visibility */}
+      {/* Rebuilt Hero Section - Fixed Video Visibility & Unified Typography */}
       <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-black">
         {/* Background Video Layer */}
         <div className="absolute inset-0 z-0 pointer-events-none">
@@ -129,27 +129,32 @@ const Home: React.FC = () => {
           </div>
         </div>
         
-        {/* Reduced Transparency and added backdrop blur for text legibility */}
+        {/* Backdrop for text legibility */}
         <div className="absolute inset-0 bg-black/40 backdrop-blur-[3px] z-10"></div>
         
-        {/* Gradient for text legibility at the bottom */}
+        {/* Gradient for bottom grounding */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20 z-10"></div>
 
         <div className="max-w-[1440px] mx-auto px-6 sm:px-12 md:px-20 xl:px-24 w-full relative z-20 py-32 text-center">
           <div className="max-w-5xl mx-auto">
-            <span className="text-[#FDFBF7]/90 font-bold tracking-[0.5em] text-[10px] sm:text-xs uppercase block mb-8 drop-shadow-xl animate-fade-up">
+            <span className="text-[#FDFBF7]/90 font-bold tracking-[0.5em] text-[10px] sm:text-xs uppercase block mb-8 drop-shadow-xl animate-reveal">
               welcome to Aumkaar
             </span>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[88px] font-serif font-medium tracking-normal text-[#FDFBF7] leading-[1.15] md:leading-[1.1] mb-12 drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
-              <span className="block animate-fade-up animation-delay-200">One stop solution to</span>
-              <span className="font-serif-italic italic text-[#FDFBF7] block mt-6 md:mt-8 opacity-100 drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] animate-fade-up animation-delay-400">
+            
+            <h1 className="font-serif font-medium tracking-normal text-[#FDFBF7] leading-[1.15] md:leading-[1.1] mb-12 drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
+              <span className="block text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[88px] animate-reveal delay-300">
+                One stop solution to
+              </span>
+              <span className="font-serif-italic italic text-[#FDFBF7] block text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[88px] mt-4 md:mt-6 opacity-100 drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] animate-reveal delay-500">
                 Stress, Sleep disorder and Anxiety
               </span>
             </h1>
-            <p className="text-[#FDFBF7] text-xl md:text-2xl lg:text-3xl xl:text-[40px] font-semibold leading-relaxed max-w-4xl mx-auto mb-16 drop-shadow-lg italic animate-fade-up animation-delay-600">
+
+            <p className="text-[#FDFBF7] text-xl md:text-2xl lg:text-3xl xl:text-[40px] font-semibold leading-relaxed max-w-4xl mx-auto mb-16 drop-shadow-lg italic animate-reveal delay-700">
               Where sound becomes medicine and silence becomes home.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 lg:gap-10 justify-center items-center animate-fade-up animation-delay-800">
+
+            <div className="flex flex-col sm:flex-row gap-6 lg:gap-10 justify-center items-center animate-reveal delay-700">
               <Link to="/contact" className="w-full sm:w-auto px-12 md:px-16 py-6 text-[#FDFBF7] font-bold tracking-[0.5em] text-[11px] hover:text-white transition-all duration-500 shadow-2xl uppercase btn-texture text-center">
                 JOIN SESSIONS
               </Link>
@@ -829,13 +834,6 @@ const Home: React.FC = () => {
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        @keyframes fade-in {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-          animation: fade-in 0.8s ease-out forwards;
-        }
       `}</style>
     </div>
   );
