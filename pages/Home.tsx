@@ -12,6 +12,7 @@ const Home: React.FC = () => {
   const [activeYoutubeIndex, setActiveYoutubeIndex] = useState(0);
   const [activeReelIndex, setActiveReelIndex] = useState(0);
   const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0);
+  const [activeVideoTestimonialIndex, setActiveVideoTestimonialIndex] = useState(0);
   
   const [isSubmittingFreebie, setIsSubmittingFreebie] = useState(false);
   const [freebieSuccess, setFreebieSuccess] = useState(false);
@@ -21,9 +22,11 @@ const Home: React.FC = () => {
   const youtubeContainerRef = useRef<HTMLDivElement>(null);
   const reelsContainerRef = useRef<HTMLDivElement>(null);
   const testimonialsContainerRef = useRef<HTMLDivElement>(null);
+  const videoTestimonialsContainerRef = useRef<HTMLDivElement>(null);
 
   const youtubeVideos = dataService.getYoutubeLinks();
   const instagramReels = dataService.getReels();
+  const videoTestimonials = dataService.getVideoTestimonials();
   const services = dataService.getServices();
   const blogs = dataService.getBlogs();
   const downloadLink = dataService.getFreebieLink();
@@ -84,8 +87,14 @@ const Home: React.FC = () => {
     setIsSubmittingFreebie(false);
   };
 
+  // Filter for 1:1 Healing services (Tibetan, Chakra, Couples)
   const healingServices = services.filter(s => 
     ['tibetan-sound-spa', 'chakra-sound-balancing', 'couples-sound-therapy'].includes(s.id)
+  );
+
+  // Filter for Group sessions (Exclude the 1:1 specific services)
+  const groupSessions = services.filter(s => 
+    !['tibetan-sound-spa', 'chakra-sound-balancing', 'couples-sound-therapy'].includes(s.id)
   );
 
   const getYoutubeId = (url: string) => {
@@ -120,26 +129,27 @@ const Home: React.FC = () => {
           </div>
         </div>
         
-        {/* Adjusted Transparency Layer for Video Visibility - Reduced to 15% */}
-        <div className="absolute inset-0 bg-black/15 z-10"></div>
+        {/* Reduced Transparency and added backdrop blur for text legibility */}
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-[3px] z-10"></div>
         
         {/* Gradient for text legibility at the bottom */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20 z-10"></div>
 
         <div className="max-w-[1440px] mx-auto px-6 sm:px-12 md:px-20 xl:px-24 w-full relative z-20 py-32 text-center">
           <div className="max-w-5xl mx-auto">
-            <span className="text-[#FDFBF7]/90 font-bold tracking-[0.5em] text-[10px] sm:text-xs uppercase block mb-8 drop-shadow-xl">
+            <span className="text-[#FDFBF7]/90 font-bold tracking-[0.5em] text-[10px] sm:text-xs uppercase block mb-8 drop-shadow-xl animate-fade-up">
               welcome to Aumkaar
             </span>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[88px] font-serif font-medium tracking-normal text-[#FDFBF7] leading-[1.15] md:leading-[1.1] mb-12 drop-shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
-              One stop solution <br />
-              <span className="italic">to</span> <br />
-              Stress, Sleep disorder and Anxiety
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[88px] font-serif font-medium tracking-normal text-[#FDFBF7] leading-[1.15] md:leading-[1.1] mb-12 drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
+              <span className="block animate-fade-up animation-delay-200">One stop solution to</span>
+              <span className="font-serif-italic italic text-[#FDFBF7] block mt-6 md:mt-8 opacity-100 drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] animate-fade-up animation-delay-400">
+                Stress, Sleep disorder and Anxiety
+              </span>
             </h1>
-            <p className="text-[#FDFBF7] text-xl md:text-2xl lg:text-3xl xl:text-[40px] font-semibold leading-relaxed max-w-4xl mx-auto mb-16 drop-shadow-lg italic">
+            <p className="text-[#FDFBF7] text-xl md:text-2xl lg:text-3xl xl:text-[40px] font-semibold leading-relaxed max-w-4xl mx-auto mb-16 drop-shadow-lg italic animate-fade-up animation-delay-600">
               Where sound becomes medicine and silence becomes home.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 lg:gap-10 justify-center items-center">
+            <div className="flex flex-col sm:flex-row gap-6 lg:gap-10 justify-center items-center animate-fade-up animation-delay-800">
               <Link to="/contact" className="w-full sm:w-auto px-12 md:px-16 py-6 text-[#FDFBF7] font-bold tracking-[0.5em] text-[11px] hover:text-white transition-all duration-500 shadow-2xl uppercase btn-texture text-center">
                 JOIN SESSIONS
               </Link>
@@ -292,7 +302,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Offerings Slider */}
+      {/* Offerings Slider - Filtered for Group Sessions */}
       <section className="py-24 md:py-32 bg-[#FDFBF7] overflow-hidden">
         <div className={contentWrapper}>
           <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 gap-10">
@@ -310,7 +320,7 @@ const Home: React.FC = () => {
         
         <div className={`relative group/slider-container ${contentWrapper}`}>
           <button 
-            onClick={() => handleArrowClick(scrollContainerRef, 'left', activeScrollIndex, setActiveScrollIndex, services.length)}
+            onClick={() => handleArrowClick(scrollContainerRef, 'left', activeScrollIndex, setActiveScrollIndex, groupSessions.length)}
             className={`absolute left-0 md:left-4 top-[40%] -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-[#FDFBF7]/80 backdrop-blur-sm border border-[#3E2723]/10 flex items-center justify-center text-[#3E2723] shadow-lg opacity-0 group-hover/slider-container:opacity-100 transition-all hover:bg-[#3E2723] hover:text-[#FDFBF7] ${activeScrollIndex === 0 ? 'invisible' : ''}`}
             aria-label="Previous Offering"
           >
@@ -318,8 +328,8 @@ const Home: React.FC = () => {
           </button>
           
           <button 
-            onClick={() => handleArrowClick(scrollContainerRef, 'right', activeScrollIndex, setActiveScrollIndex, services.length)}
-            className={`absolute right-0 md:right-4 top-[40%] -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-[#FDFBF7]/80 backdrop-blur-sm border border-[#3E2723]/10 flex items-center justify-center text-[#3E2723] shadow-lg opacity-0 group-hover/slider-container:opacity-100 transition-all hover:bg-[#3E2723] hover:text-[#FDFBF7] ${activeScrollIndex === services.length - 1 ? 'invisible' : ''}`}
+            onClick={() => handleArrowClick(scrollContainerRef, 'right', activeScrollIndex, setActiveScrollIndex, groupSessions.length)}
+            className={`absolute right-0 md:right-4 top-[40%] -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-[#FDFBF7]/80 backdrop-blur-sm border border-[#3E2723]/10 flex items-center justify-center text-[#3E2723] shadow-lg opacity-0 group-hover/slider-container:opacity-100 transition-all hover:bg-[#3E2723] hover:text-[#FDFBF7] ${activeScrollIndex === groupSessions.length - 1 ? 'invisible' : ''}`}
             aria-label="Next Offering"
           >
             <ChevronRight size={24} />
@@ -327,10 +337,10 @@ const Home: React.FC = () => {
 
           <div 
             ref={scrollContainerRef}
-            onScroll={() => handleScrollTracking(scrollContainerRef, setActiveScrollIndex, services.length)}
+            onScroll={() => handleScrollTracking(scrollContainerRef, setActiveScrollIndex, groupSessions.length)}
             className="flex overflow-x-auto gap-8 md:gap-12 pb-16 snap-x snap-mandatory no-scrollbar scroll-smooth"
           >
-            {services.map((service) => (
+            {groupSessions.map((service) => (
               <div key={service.id} className="snap-start shrink-0 w-[80vw] sm:w-[50vw] md:w-[40vw] lg:w-[30vw] max-w-[450px]">
                 <div className="group/card flex flex-col h-full">
                   <Link to={`/service/${service.id}`} className="block flex-grow">
@@ -357,10 +367,10 @@ const Home: React.FC = () => {
           </div>
 
           <div className="flex justify-center items-center gap-3 mt-4">
-            {services.map((_, idx) => (
+            {groupSessions.map((_, idx) => (
               <button
                 key={idx}
-                onClick={() => scrollToItem(scrollContainerRef, idx, services.length)}
+                onClick={() => scrollToItem(scrollContainerRef, idx, groupSessions.length)}
                 className={`transition-all duration-500 rounded-full ${activeScrollIndex === idx ? 'w-10 h-1.5 bg-[#A05035]' : 'w-2 h-2 bg-[#3E2723]/20 hover:bg-[#3E2723]/40'}`}
                 aria-label={`Go to offering ${idx + 1}`}
               />
@@ -426,6 +436,73 @@ const Home: React.FC = () => {
                 onClick={() => scrollToItem(testimonialsContainerRef, idx, TESTIMONIALS.length)}
                 className={`transition-all duration-500 rounded-full ${activeTestimonialIndex === idx ? 'w-10 h-1.5 bg-[#A05035]' : 'w-2 h-2 bg-[#3E2723]/20 hover:bg-[#3E2723]/40'}`}
                 aria-label={`Go to testimonial ${idx + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Video Testimonials Section */}
+      <section className="py-24 md:py-32 lg:py-40 bg-[#FDFBF7] overflow-hidden">
+        <div className={`${contentWrapper} text-center mb-16 md:mb-24`}>
+           <span className="text-[#A05035] font-bold tracking-[0.5em] text-xs uppercase block mb-8">Voices of Healing</span>
+           <h2 className="text-3xl md:text-6xl font-serif font-medium text-[#3E2723] leading-tight">Personal Journeys in Sound</h2>
+        </div>
+        
+        <div className={`relative group/video-testimonials-container ${contentWrapper}`}>
+          <button 
+            onClick={() => handleArrowClick(videoTestimonialsContainerRef, 'left', activeVideoTestimonialIndex, setActiveVideoTestimonialIndex, videoTestimonials.length)}
+            className={`absolute left-0 md:left-4 top-[40%] -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-[#FDFBF7]/80 backdrop-blur-sm border border-[#3E2723]/10 flex items-center justify-center text-[#3E2723] shadow-lg opacity-0 group-hover/video-testimonials-container:opacity-100 transition-all hover:bg-[#3E2723] hover:text-[#FDFBF7] ${activeVideoTestimonialIndex === 0 ? 'invisible' : ''}`}
+            aria-label="Previous Video Testimonial"
+          >
+            <ChevronLeft size={24} />
+          </button>
+          
+          <button 
+            onClick={() => handleArrowClick(videoTestimonialsContainerRef, 'right', activeVideoTestimonialIndex, setActiveVideoTestimonialIndex, videoTestimonials.length)}
+            className={`absolute right-0 md:right-4 top-[40%] -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-[#FDFBF7]/80 backdrop-blur-sm border border-[#3E2723]/10 flex items-center justify-center text-[#3E2723] shadow-lg opacity-0 group-hover/video-testimonials-container:opacity-100 transition-all hover:bg-[#3E2723] hover:text-[#FDFBF7] ${activeVideoTestimonialIndex === videoTestimonials.length - 1 ? 'invisible' : ''}`}
+            aria-label="Next Video Testimonial"
+          >
+            <ChevronRight size={24} />
+          </button>
+
+          <div 
+            ref={videoTestimonialsContainerRef}
+            onScroll={() => handleScrollTracking(videoTestimonialsContainerRef, setActiveVideoTestimonialIndex, videoTestimonials.length)}
+            className="flex overflow-x-auto gap-8 md:gap-12 pb-16 snap-x snap-mandatory no-scrollbar scroll-smooth"
+          >
+            {videoTestimonials.map((video: any, idx: number) => {
+              const videoId = getYoutubeId(video.url);
+              return (
+                <div key={idx} className="snap-start shrink-0 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[35vw] max-w-[500px]">
+                  <div className="flex flex-col h-full bg-white border border-[#A05035]/10 overflow-hidden shadow-2xl transition-all duration-700 hover:shadow-3xl">
+                    <div className="relative aspect-video overflow-hidden bg-black">
+                      <iframe 
+                        className="absolute inset-0 w-full h-full" 
+                        src={`https://www.youtube.com/embed/${videoId}?modestbranding=1&rel=0&showinfo=0`} 
+                        title={video.title || "Testimonial Video"} 
+                        frameBorder="0" 
+                        allowFullScreen
+                      ></iframe>
+                    </div>
+                    <div className="p-8 text-center bg-[#F4EFE6]/30">
+                       <h3 className="text-xl md:text-2xl font-serif text-[#3E2723] font-medium leading-tight">
+                         {video.title || "Sacred Journey"}
+                       </h3>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="flex justify-center items-center gap-3 mt-4">
+            {videoTestimonials.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => scrollToItem(videoTestimonialsContainerRef, idx, videoTestimonials.length)}
+                className={`transition-all duration-500 rounded-full ${activeVideoTestimonialIndex === idx ? 'w-10 h-1.5 bg-[#A05035]' : 'w-2 h-2 bg-[#3E2723]/20 hover:bg-[#3E2723]/40'}`}
+                aria-label={`Go to video testimonial ${idx + 1}`}
               />
             ))}
           </div>
@@ -657,7 +734,7 @@ const Home: React.FC = () => {
         <div className={contentWrapper}>
           <div className="flex flex-col lg:flex-row shadow-[0_50px_100px_-20px_rgba(62,39,35,0.15)] rounded-3xl overflow-hidden bg-white border border-[#A05035]/10">
             <div className="lg:w-[45%] bg-texture p-12 md:p-16 lg:p-20 flex flex-col justify-center items-center text-center relative overflow-hidden">
-               <div className="absolute inset-0 bg-[#3E2723]/40 mix-blend-multiply pointer-events-none"></div>
+               <div className="absolute inset-0 bg-[#3E2723]/15 pointer-events-none"></div>
                <div className="relative z-10 space-y-10">
                   <div className="w-16 h-16 md:w-20 md:h-20 bg-[#FDFBF7]/10 backdrop-blur-md rounded-full flex items-center justify-center mx-auto border border-white/20 shadow-2xl">
                     <Gift size={32} className="text-[#FDFBF7]" />

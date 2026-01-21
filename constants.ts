@@ -18,9 +18,6 @@ export const NAV_ITEMS: NavItem[] = [
       { label: 'Sound', isHeader: true },
       { label: 'Sound Healing', path: '/service/sound-healing' },
       { label: 'Sound Bath', path: '/service/sound-bath' },
-      { label: 'Tibetan Sound Spa', path: '/service/tibetan-sound-spa' },
-      { label: 'Chakra Sound Balancing', path: '/service/chakra-sound-balancing' },
-      { label: 'Couples Sound Therapy', path: '/service/couples-sound-therapy' },
       { label: 'Sound Manifestation', path: '/service/sound-manifestation' },
       { label: 'One on One Sound Therapy', path: '/service/one-on-one-sound-therapy' },
       { label: 'Private Group Unique Offerings', path: '/service/private-group' },
@@ -55,9 +52,10 @@ export const EVENTS: Event[] = [
   {
     id: 'lunar-sound-healing',
     title: 'Full Moon Sound Healing Ritual',
-    date: 'August 19, 2024',
-    time: '7:00 PM - 8:30 PM',
+    date: '2024-08-19',
+    time: '19:00',
     location: 'Aumkaar Rooftop Sanctuary',
+    locationLink: 'https://maps.app.goo.gl/example1',
     price: '$65',
     category: 'Vibrational Therapy',
     shortDescription: 'Align your frequency with the lunar cycle in this deep vibrational journey.',
@@ -75,9 +73,10 @@ export const EVENTS: Event[] = [
   {
     id: 'sacred-sound-bath-immersion',
     title: 'Sacred Sound Bath Immersion',
-    date: 'September 5, 2024',
-    time: '6:30 PM - 8:00 PM',
+    date: '2024-09-05',
+    time: '18:30',
     location: 'The Great Hall, Wellness District',
+    locationLink: 'https://maps.app.goo.gl/example2',
     price: '$45',
     category: 'Group Immersion',
     shortDescription: 'A collective resonance experience for deep relaxation and mental clarity.',
@@ -287,7 +286,7 @@ export const SERVICES: Service[] = [
       'Clearer thinking and calm focus'
     ],
     details: {
-      whatItIs: {
+       whatItIs: {
         description: 'A personalised, one-on-one sound therapy where Himalayan singing bowls are placed on and around the body with no physical touch involved. The vibrations travel through muscles, fascia and fluid, creating a gentle internal “massage” that calms the nervous system and helps the body shift from stress into ease.',
         points: [
           'Works through a blend of vibration + sound + intention',
@@ -809,7 +808,7 @@ export const SERVICES: Service[] = [
     fullDescription: 'Tai Chi is a gentle, flowing mind-body practice that helps release stress, improve balance, and restore inner harmony through slow, intentional movements.',
     duration: '30 to 45 minutes',
     price: 'Enquire for Pricing',
-    image: 'https://images.unsplash.com/photo-1518331483807-f671ed196885?q=80&w=2070&auto=format&fit=crop',
+    image: 'https://i.ibb.co/SXpJrzBW/IMG-7997.jpg',
     benefits: [
       'Releasing muscular and emotional tension',
       'Improving posture and spinal alignment',
@@ -879,7 +878,7 @@ export const SERVICES: Service[] = [
     shortDescription: 'Scientifically supported nervous system reset for high-performance teams.',
     fullDescription: 'In-office or offsite sessions designed to reduce workplace stress, boost productivity and provide a collective moment of deep rest.',
     duration: '60–90 Minutes',
-    price: 'Custom Quote',
+    price: 'Enquire for Pricing',
     image: 'https://i.ibb.co/21fHTCLf/corporate-sonud-healing-and-bath.png', 
     benefits: [
       'Reduced team burnout and exhaustion',
@@ -960,7 +959,7 @@ export const SERVICES: Service[] = [
     fullDescription: 'The Sound Circle is a guided group experience where teams sit together in a circle and receive therapeutic sound vibrations, removing roles and rank to create instant psychological safety.',
     duration: '60–90 minutes',
     price: 'Custom Quote',
-    image: 'https://i.ibb.co/S4wPrLMm/team-harmony-sound-circle.png', 
+    image: 'https://i.ibb.co/tM2ZffZX/Yoga-and-meditation-in-serene-space.png', 
     benefits: [
       'Shared Brainwave Synchronisation (Alpha & Theta)',
       'Removal of Hierarchy and Spotlight',

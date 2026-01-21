@@ -6,6 +6,7 @@ import { BlogPost, Event, Service } from '../types';
 const STORAGE_KEYS = {
   YOUTUBE: 'aumkaar_youtube_links',
   REELS: 'aumkaar_instagram_reels',
+  VIDEO_TESTIMONIALS: 'aumkaar_video_testimonials',
   BLOGS: 'aumkaar_blogs',
   EVENTS: 'aumkaar_events',
   FREEBIE: 'aumkaar_freebie_link',
@@ -30,6 +31,19 @@ const DEFAULT_REELS = [
   { url: 'https://www.instagram.com/reel/DSl9IbektnW/', title: 'Inner Journey' }
 ];
 
+const DEFAULT_VIDEO_TESTIMONIALS = [
+  { url: 'https://youtu.be/cCe7wUJKF1A', title: 'Life Transformation' },
+  { url: 'https://youtu.be/BS3prMmbUpE', title: 'Deep Inner Peace' },
+  { url: 'https://youtu.be/MC2qnV7HPBU', title: 'Nervous System Reset' },
+  { url: 'https://youtu.be/NhQCPJNH1NI', title: 'A New Perspective' },
+  { url: 'https://youtu.be/vCaD8qI2KLM', title: 'Healing Journey' },
+  { url: 'https://youtu.be/b38_dvhyuGE', title: 'Stress Relief' },
+  { url: 'https://youtu.be/zChUmcTXSP8', title: 'Mind Mastery' },
+  { url: 'https://youtu.be/lj11PoatGys', title: 'Vibrational Shift' },
+  { url: 'https://youtu.be/hWgxbVI8Onc', title: 'Soul Resonance' },
+  { url: 'https://youtu.be/rVpQg_FS2Og', title: 'Gratitude Story' }
+];
+
 const DEFAULT_FREEBIE = 'https://drive.google.com/file/d/1EnCTs5Ixe1j1U9m9j98x8pULIL_1cGqP/view?usp=sharing';
 
 const DEFAULT_AUTH = {
@@ -52,6 +66,7 @@ export const dataService = {
       if (remoteData && typeof remoteData === 'object' && Object.keys(remoteData).length > 0) {
         if (remoteData.youtube) localStorage.setItem(STORAGE_KEYS.YOUTUBE, JSON.stringify(remoteData.youtube));
         if (remoteData.reels) localStorage.setItem(STORAGE_KEYS.REELS, JSON.stringify(remoteData.reels));
+        if (remoteData.videoTestimonials) localStorage.setItem(STORAGE_KEYS.VIDEO_TESTIMONIALS, JSON.stringify(remoteData.videoTestimonials));
         if (remoteData.blogs) localStorage.setItem(STORAGE_KEYS.BLOGS, JSON.stringify(remoteData.blogs));
         if (remoteData.events) localStorage.setItem(STORAGE_KEYS.EVENTS, JSON.stringify(remoteData.events));
         if (remoteData.freebie) localStorage.setItem(STORAGE_KEYS.FREEBIE, remoteData.freebie);
@@ -74,6 +89,7 @@ export const dataService = {
       const payload = {
         youtube: dataService.getYoutubeLinks(),
         reels: dataService.getReels(),
+        videoTestimonials: dataService.getVideoTestimonials(),
         blogs: dataService.getBlogs(),
         events: dataService.getEvents(),
         freebie: dataService.getFreebieLink(),
@@ -117,6 +133,13 @@ export const dataService = {
     return saved ? JSON.parse(saved) : DEFAULT_REELS;
   },
   setReels: (reels: any[]) => localStorage.setItem(STORAGE_KEYS.REELS, JSON.stringify(reels)),
+
+  // Video Testimonials
+  getVideoTestimonials: () => {
+    const saved = localStorage.getItem(STORAGE_KEYS.VIDEO_TESTIMONIALS);
+    return saved ? JSON.parse(saved) : DEFAULT_VIDEO_TESTIMONIALS;
+  },
+  setVideoTestimonials: (videos: any[]) => localStorage.setItem(STORAGE_KEYS.VIDEO_TESTIMONIALS, JSON.stringify(videos)),
 
   // Blogs
   getBlogs: (): BlogPost[] => {

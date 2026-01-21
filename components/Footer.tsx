@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Youtube, Linkedin, Mail, MapPin, Loader2, Check } from 'lucide-react';
@@ -10,7 +11,13 @@ const Footer: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
   
   const services = dataService.getServices();
-  const personalSessions = services.filter(s => s.category !== 'Corporate Wellness');
+  
+  // Categorize services for footer columns
+  const oneOnOneIds = ['tibetan-sound-spa', 'chakra-sound-balancing', 'couples-sound-therapy'];
+  const oneOnOneSessions = services.filter(s => oneOnOneIds.includes(s.id));
+  const groupSessions = services.filter(s => 
+    s.category !== 'Corporate Wellness' && !oneOnOneIds.includes(s.id)
+  );
   const corporateSessions = services.filter(s => s.category === 'Corporate Wellness');
 
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
@@ -41,7 +48,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-texture text-[#FDFBF7] pt-20 pb-10">
       <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-12 lg:gap-8">
           
           {/* Brand & Description */}
           <div className="space-y-8 lg:col-span-2">
@@ -58,7 +65,7 @@ const Footer: React.FC = () => {
               </div>
               <div className="flex items-center">
                 <Mail size={18} className="mr-3 shrink-0" />
-                <a href="mailto:hello@aumkaar.com" className="hover:underline">hello@aumkaar.com</a>
+                <a href="mailto:info@aumkaar.in" className="hover:underline">info@aumkaar.in</a>
               </div>
             </div>
           </div>
@@ -71,15 +78,36 @@ const Footer: React.FC = () => {
               <li><Link to="/about" className="hover:text-white hover:underline transition-all">About Us</Link></li>
               <li><Link to="/services" className="hover:text-white hover:underline transition-all font-bold">All Offerings</Link></li>
               <li><Link to="/blog" className="hover:text-white hover:underline transition-all">Journal</Link></li>
+              <li><Link to="/events" className="hover:text-white hover:underline transition-all">Events</Link></li>
               <li><Link to="/contact" className="hover:text-white hover:underline transition-all">Contact Us</Link></li>
             </ul>
           </div>
 
-          {/* Personal Sessions Column */}
+          {/* 1:1 Sessions Column */}
           <div className="space-y-6">
-            <h4 className="text-lg font-serif italic text-[#FDFBF7]">Personal Sessions</h4>
+            <h4 className="text-lg font-serif italic text-[#FDFBF7]">1:1 Healing</h4>
             <ul className="space-y-3 text-[13px] opacity-90 font-normal">
-              {personalSessions.slice(0, 6).map((service) => {
+              {oneOnOneSessions.map((service) => {
+                const serviceName = service.title.split(' : ')[0];
+                return (
+                  <li key={service.id}>
+                    <Link 
+                      to={`/service/${service.id}`} 
+                      className="hover:text-white hover:underline transition-all block py-0.5"
+                    >
+                      {serviceName}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+
+          {/* Group Sessions Column */}
+          <div className="space-y-6">
+            <h4 className="text-lg font-serif italic text-[#FDFBF7]">Group Sessions</h4>
+            <ul className="space-y-3 text-[13px] opacity-90 font-normal">
+              {groupSessions.slice(0, 6).map((service) => {
                 const serviceName = service.title.split(' : ')[0];
                 return (
                   <li key={service.id}>

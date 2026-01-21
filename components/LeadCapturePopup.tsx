@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { X, Gift, CheckCircle2, Loader2 } from 'lucide-react';
 import { submitForm } from '../services/submissionService';
@@ -82,8 +83,8 @@ const LeadCapturePopup: React.FC = () => {
               backgroundPosition: 'center'
             }}
           >
-            {/* Dark Overlay for contrast */}
-            <div className="absolute inset-0 bg-[#A05035]/45 mix-blend-multiply pointer-events-none"></div>
+            {/* Dark Overlay for contrast - Made lighter */}
+            <div className="absolute inset-0 bg-[#A05035]/25 pointer-events-none"></div>
             
             <div className="relative z-10 space-y-6 md:space-y-10">
               <img src={LOGOS.ON_DARK} alt="Aumkaar" className="h-10 md:h-16 w-auto object-contain mx-auto" />

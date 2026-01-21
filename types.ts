@@ -43,6 +43,7 @@ export interface Event {
   date: string;
   time: string;
   location: string;
+  locationLink?: string;
   price: string;
   category: string;
   shortDescription: string;

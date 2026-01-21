@@ -1,11 +1,12 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Youtube, Instagram, BookOpen, Calendar, Gift, Save, Plus, Trash2, ArrowLeft, Lock, LogOut, User, Image as ImageIcon, Loader2, ShieldCheck, Eye, EyeOff, Type, Heading1, Heading2, AlignLeft, Quote } from 'lucide-react';
+/* Added Clock to the lucide-react imports to fix the build error */
+import { Youtube, Instagram, BookOpen, Calendar, Clock, Gift, Save, Plus, Trash2, ArrowLeft, Lock, LogOut, User, Image as ImageIcon, Loader2, ShieldCheck, Eye, EyeOff, Type, Heading1, Heading2, AlignLeft, Quote, Video, MapPin, Link as LinkIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { dataService } from '../services/dataService';
 import { LOGOS } from '../assets/logos';
 
-type Section = 'youtube' | 'reels' | 'blogs' | 'events' | 'freebie' | 'services' | 'security';
+type Section = 'youtube' | 'reels' | 'video-testimonials' | 'blogs' | 'events' | 'freebie' | 'services' | 'security';
 
 const Admin: React.FC = () => {
   // Auth State
@@ -19,6 +20,7 @@ const Admin: React.FC = () => {
   const [activeSection, setActiveSection] = useState<Section>('youtube');
   const [youtubeLinks, setYoutubeLinks] = useState(dataService.getYoutubeLinks());
   const [reels, setReels] = useState(dataService.getReels());
+  const [videoTestimonials, setVideoTestimonials] = useState(dataService.getVideoTestimonials());
   const [blogs, setBlogs] = useState(dataService.getBlogs());
   const [events, setEvents] = useState(dataService.getEvents());
   const [freebieLink, setFreebieLink] = useState(dataService.getFreebieLink());
@@ -38,6 +40,7 @@ const Admin: React.FC = () => {
     dataService.init().then(() => {
        setYoutubeLinks(dataService.getYoutubeLinks());
        setReels(dataService.getReels());
+       setVideoTestimonials(dataService.getVideoTestimonials());
        setBlogs(dataService.getBlogs());
        setEvents(dataService.getEvents());
        setFreebieLink(dataService.getFreebieLink());
@@ -64,6 +67,7 @@ const Admin: React.FC = () => {
     // 1. Save locally
     dataService.setYoutubeLinks(youtubeLinks);
     dataService.setReels(reels);
+    dataService.setVideoTestimonials(videoTestimonials);
     dataService.setBlogs(blogs);
     dataService.setEvents(events);
     dataService.setFreebieLink(freebieLink);
@@ -98,6 +102,9 @@ const Admin: React.FC = () => {
       }
       setReels([...reels, { url: '', title: '' }]);
     }
+    if (section === 'video-testimonials') {
+      setVideoTestimonials([...videoTestimonials, { url: '', title: '' }]);
+    }
     if (section === 'blogs') {
       setBlogs([...blogs, { 
         id: Date.now().toString(), 
@@ -117,6 +124,7 @@ const Admin: React.FC = () => {
       date: '', 
       time: '', 
       location: '', 
+      locationLink: '',
       price: '', 
       category: '', 
       shortDescription: '', 
@@ -131,6 +139,7 @@ const Admin: React.FC = () => {
   const removeItem = (section: Section, index: number) => {
     if (section === 'youtube') setYoutubeLinks(youtubeLinks.filter((_: any, i: number) => i !== index));
     if (section === 'reels') setReels(reels.filter((_: any, i: number) => i !== index));
+    if (section === 'video-testimonials') setVideoTestimonials(videoTestimonials.filter((_: any, i: number) => i !== index));
     if (section === 'blogs') setBlogs(blogs.filter((_: any, i: number) => i !== index));
     if (section === 'events') setEvents(events.filter((_: any, i: number) => i !== index));
   };
@@ -184,7 +193,7 @@ const Admin: React.FC = () => {
     return (
       <div className="min-h-screen bg-[#FDFBF7] flex items-center justify-center p-6 bg-texture">
         <div className="absolute inset-0 bg-[#3E2723]/40 backdrop-blur-sm"></div>
-        <div className="relative w-full max-w-md bg-[#FDFBF7] p-10 md:p-14 shadow-[0_30px_100px_rgba(0,0,0,0.5)] rounded-sm border border-[#A05035]/20 animate-fade-in">
+        <div className="relative w-full max-md bg-[#FDFBF7] p-10 md:p-14 shadow-[0_30px_100px_rgba(0,0,0,0.5)] rounded-sm border border-[#A05035]/20 animate-fade-in">
           <div className="text-center mb-10">
             <img src={LOGOS.SYMBOL} alt="Aumkaar" className="h-16 mx-auto mb-6 opacity-30" />
             <h1 className="text-4xl font-serif text-[#3E2723] mb-3">Sanctuary Access</h1>
@@ -269,6 +278,7 @@ const Admin: React.FC = () => {
           {[
             { id: 'youtube', label: `YouTube Videos (${youtubeLinks.length}/8)`, icon: Youtube },
             { id: 'reels', label: `Instagram Reels (${reels.length}/8)`, icon: Instagram },
+            { id: 'video-testimonials', label: `Video Testimonials (${videoTestimonials.length})`, icon: Video },
             { id: 'blogs', label: 'Journal Articles', icon: BookOpen },
             { id: 'events', label: 'Upcoming Events', icon: Calendar },
             { id: 'services', label: 'Session Hero Images', icon: ImageIcon },
@@ -364,6 +374,38 @@ const Admin: React.FC = () => {
                   <Plus size={20} /> Add YouTube Link
                 </button>
               )}
+            </div>
+          )}
+
+          {/* Video Testimonials Section */}
+          {activeSection === 'video-testimonials' && (
+            <div className="space-y-8">
+              {videoTestimonials.map((video: any, idx: number) => (
+                <div key={idx} className="bg-white p-8 border border-[#A05035]/10 shadow-sm relative group">
+                  <button onClick={() => removeItem('video-testimonials', idx)} className="absolute top-4 right-4 text-[#A05035] opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 size={18} /></button>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-[10px] font-bold text-[#A05035] uppercase tracking-widest mb-2">YouTube URL</label>
+                      <input className="w-full bg-[#FDFBF7] p-3 text-sm focus:outline-none focus:border-[#A05035] border-b border-[#3E2723]/10" placeholder="https://youtu.be/..." value={video.url} onChange={(e) => {
+                        const next = [...videoTestimonials];
+                        next[idx].url = e.target.value;
+                        setVideoTestimonials(next);
+                      }} />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-[#A05035] uppercase tracking-widest mb-2">Title / Label</label>
+                      <input className="w-full bg-[#FDFBF7] p-3 text-sm focus:outline-none focus:border-[#A05035] border-b border-[#3E2723]/10" value={video.title} onChange={(e) => {
+                        const next = [...videoTestimonials];
+                        next[idx].title = e.target.value;
+                        setVideoTestimonials(next);
+                      }} />
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <button onClick={() => addItem('video-testimonials')} className="w-full border-2 border-dashed border-[#A05035]/20 p-8 text-[#A05035] flex items-center justify-center gap-3 hover:bg-[#A05035]/5 transition-all uppercase text-[10px] font-bold tracking-widest">
+                <Plus size={20} /> Add Video Testimonial
+              </button>
             </div>
           )}
 
@@ -529,35 +571,45 @@ const Admin: React.FC = () => {
             </div>
           )}
 
-          {/* Events Section */}
+          {/* Events Section - Updated with Date/Time Pickers and Location Link */}
           {activeSection === 'events' && (
             <div className="space-y-12">
               {events.map((ev: any, idx: number) => (
-                <div key={idx} className="bg-white p-8 md:p-12 border border-[#A05035]/10 shadow-sm relative group space-y-6">
+                <div key={idx} className="bg-white p-8 md:p-12 border border-[#A05035]/10 shadow-sm relative group space-y-8">
                   <button onClick={() => removeItem('events', idx)} className="absolute top-6 right-6 text-[#A05035] opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 size={20} /></button>
                   
                   <div className="space-y-4">
                     <label className="block text-[10px] font-bold text-[#A05035] uppercase tracking-widest">Event Title</label>
-                    <input className="text-2xl font-serif text-[#3E2723] w-full focus:outline-none bg-[#FDFBF7] p-4" value={ev.title} onChange={(e) => updateEvent(idx, 'title', e.target.value)} />
+                    <input className="text-2xl font-serif text-[#3E2723] w-full focus:outline-none bg-[#FDFBF7] p-4 border-b border-[#A05035]/10" value={ev.title} onChange={(e) => updateEvent(idx, 'title', e.target.value)} />
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div className="space-y-2">
-                      <label className="block text-[10px] font-bold text-[#3E2723]/40 uppercase tracking-widest">Date</label>
-                      <input className="w-full text-sm bg-[#FDFBF7] p-3 focus:outline-none border-b border-[#3E2723]/10" value={ev.date} placeholder="e.g. Sept 12" onChange={(e) => updateEvent(idx, 'date', e.target.value)} />
+                      <label className="block text-[10px] font-bold text-[#3E2723]/40 uppercase tracking-widest flex items-center gap-2"><Calendar size={12}/> Select Date</label>
+                      <input type="date" className="w-full text-sm bg-[#FDFBF7] p-3 focus:outline-none border-b border-[#3E2723]/10" value={ev.date} onChange={(e) => updateEvent(idx, 'date', e.target.value)} />
                     </div>
                     <div className="space-y-2">
-                      <label className="block text-[10px] font-bold text-[#3E2723]/40 uppercase tracking-widest">Time</label>
-                      <input className="w-full text-sm bg-[#FDFBF7] p-3 focus:outline-none border-b border-[#3E2723]/10" value={ev.time} placeholder="e.g. 6:30 PM - 8:00 PM" onChange={(e) => updateEvent(idx, 'time', e.target.value)} />
+                      <label className="block text-[10px] font-bold text-[#3E2723]/40 uppercase tracking-widest flex items-center gap-2"><Clock size={12}/> Select Time</label>
+                      <input type="time" className="w-full text-sm bg-[#FDFBF7] p-3 focus:outline-none border-b border-[#3E2723]/10" value={ev.time} onChange={(e) => updateEvent(idx, 'time', e.target.value)} />
                     </div>
                     <div className="space-y-2">
                       <label className="block text-[10px] font-bold text-[#3E2723]/40 uppercase tracking-widest">Price</label>
                       <input className="w-full text-sm bg-[#FDFBF7] p-3 focus:outline-none border-b border-[#3E2723]/10" value={ev.price} placeholder="e.g. $45" onChange={(e) => updateEvent(idx, 'price', e.target.value)} />
                     </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-2">
-                      <label className="block text-[10px] font-bold text-[#3E2723]/40 uppercase tracking-widest">Location</label>
-                      <input className="w-full text-sm bg-[#FDFBF7] p-3 focus:outline-none border-b border-[#3E2723]/10" value={ev.location} placeholder="Venue Name" onChange={(e) => updateEvent(idx, 'location', e.target.value)} />
+                      <label className="block text-[10px] font-bold text-[#3E2723]/40 uppercase tracking-widest flex items-center gap-2"><MapPin size={12}/> Venue Name</label>
+                      <input className="w-full text-sm bg-[#FDFBF7] p-3 focus:outline-none border-b border-[#3E2723]/10" value={ev.location} placeholder="Name of location" onChange={(e) => updateEvent(idx, 'location', e.target.value)} />
                     </div>
+                    <div className="space-y-2">
+                      <label className="block text-[10px] font-bold text-[#3E2723]/40 uppercase tracking-widest flex items-center gap-2"><LinkIcon size={12}/> Location Link (Google Maps)</label>
+                      <input className="w-full text-sm bg-[#FDFBF7] p-3 focus:outline-none border-b border-[#3E2723]/10 text-[#A05035]" value={ev.locationLink || ''} placeholder="https://maps.google.com/..." onChange={(e) => updateEvent(idx, 'locationLink', e.target.value)} />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-2">
                       <label className="block text-[10px] font-bold text-[#3E2723]/40 uppercase tracking-widest">Capacity</label>
                       <input className="w-full text-sm bg-[#FDFBF7] p-3 focus:outline-none border-b border-[#3E2723]/10" value={ev.capacity} placeholder="e.g. 15 Seats Left" onChange={(e) => updateEvent(idx, 'capacity', e.target.value)} />
@@ -570,7 +622,7 @@ const Admin: React.FC = () => {
 
                   <div className="space-y-2">
                     <label className="block text-[10px] font-bold text-[#3E2723]/40 uppercase tracking-widest">Image URL</label>
-                    <input className="w-full text-xs text-[#A05035] uppercase tracking-widest focus:outline-none bg-[#FDFBF7] p-3" value={ev.image} placeholder="Event Image URL" onChange={(e) => updateEvent(idx, 'image', e.target.value)} />
+                    <input className="w-full text-xs text-[#A05035] uppercase tracking-widest focus:outline-none bg-[#FDFBF7] p-3 border-b border-[#3E2723]/10" value={ev.image} placeholder="Event Image URL" onChange={(e) => updateEvent(idx, 'image', e.target.value)} />
                   </div>
 
                   <div className="space-y-2">
@@ -580,12 +632,12 @@ const Admin: React.FC = () => {
 
                   <div className="space-y-2">
                     <label className="block text-[10px] font-bold text-[#3E2723]/40 uppercase tracking-widest">Full Description</label>
-                    <textarea className="w-full text-sm bg-[#FDFBF7] p-4 h-32 focus:outline-none border border-[#3E2723]/5" value={ev.fullDescription} placeholder="Detailed event narrative" onChange={(e) => updateEvent(idx, 'fullDescription', e.target.value)} />
+                    <textarea className="w-full text-sm bg-[#FDFBF7] p-4 h-32 focus:outline-none border border-[#3E2723]/10 resize-none" value={ev.fullDescription} placeholder="Detailed event narrative" onChange={(e) => updateEvent(idx, 'fullDescription', e.target.value)} />
                   </div>
 
                   <div className="space-y-2">
                     <label className="block text-[10px] font-bold text-[#3E2723]/40 uppercase tracking-widest">Event Highlights (One per line)</label>
-                    <textarea className="w-full text-sm bg-[#FDFBF7] p-4 h-24 focus:outline-none border border-[#3E2723]/5" value={ev.highlights?.join('\n')} placeholder="List key highlights..." onChange={(e) => handleEventHighlightsChange(idx, e.target.value)} />
+                    <textarea className="w-full text-sm bg-[#FDFBF7] p-4 h-24 focus:outline-none border border-[#3E2723]/10 resize-none" value={ev.highlights?.join('\n')} placeholder="List key highlights..." onChange={(e) => handleEventHighlightsChange(idx, e.target.value)} />
                   </div>
                 </div>
               ))}
