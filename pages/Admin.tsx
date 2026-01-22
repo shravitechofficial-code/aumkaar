@@ -1,7 +1,6 @@
 
-import React, { useState, useEffect, useRef } from 'react';
-/* Added Clock to the lucide-react imports to fix the build error */
-import { Youtube, Instagram, BookOpen, Calendar, Clock, Gift, Save, Plus, Trash2, ArrowLeft, Lock, LogOut, User, Image as ImageIcon, Loader2, ShieldCheck, Eye, EyeOff, Type, Heading1, Heading2, AlignLeft, Quote, Video, MapPin, Link as LinkIcon } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Youtube, Instagram, BookOpen, Calendar, Clock, Gift, Save, Plus, Trash2, ArrowLeft, Lock, LogOut, User, Image as ImageIcon, Loader2, ShieldCheck, Eye, EyeOff, Heading1, Heading2, AlignLeft, Quote, Video, MapPin, Link as LinkIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { dataService } from '../services/dataService';
 import { LOGOS } from '../assets/logos';

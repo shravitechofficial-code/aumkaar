@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FALLBACK_IMAGE } from '../constants';
-import { Check, Clock, DollarSign, Star, ChevronDown, Heart, HelpCircle, Loader2, Users, Calendar, Info, AlertTriangle, Sparkles } from 'lucide-react';
+import { Check, Clock, DollarSign, Star, ChevronDown, Heart, HelpCircle, Loader2, Users, Info, AlertTriangle, Sparkles } from 'lucide-react';
 import { submitForm } from '../services/submissionService';
 import { dataService } from '../services/dataService';
 

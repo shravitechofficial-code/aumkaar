@@ -1,5 +1,6 @@
+
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, Youtube, X, BookOpen, Heart, Shield, Wind } from 'lucide-react';
+import { X, BookOpen, Heart, Shield, Wind } from 'lucide-react';
 import { FALLBACK_IMAGE } from '../constants';
 import { LOGOS } from '../assets/logos';
 import { Link } from 'react-router-dom';
