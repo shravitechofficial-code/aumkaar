@@ -1,0 +1,5 @@
+# Security policy for Aumkaar Wellness
+Contact: mailto:contact@aumkaar.com
+Expires: 2027-01-01T00:00:00.000Z
+Languages: en
+Canonical: https://aumkaar.com/security.txt

@@ -319,9 +319,20 @@ const Home: React.FC = () => {
                 <p className="text-[#3E2723] text-base font-light opacity-90 mb-6 line-clamp-3">
                   {service.shortDescription}
                 </p>
-                <Link to={`/service/${service.id}`} className="inline-flex items-center gap-2 text-[#A05035] text-[10px] font-bold tracking-[0.3em] uppercase hover:underline mt-auto">
-                  Explore Session <ArrowRight size={14} />
-                </Link>
+                <div className="flex flex-col sm:flex-row gap-3 mt-auto pt-6">
+                  <Link 
+                    to={`/service/${service.id}`} 
+                    className="flex-1 text-center py-3 border border-[#A05035] text-[#A05035] text-[10px] font-bold tracking-[0.2em] uppercase transition-all hover:bg-[#A05035]/5 flex items-center justify-center gap-2"
+                  >
+                    Details <ArrowRight size={12} />
+                  </Link>
+                  <Link 
+                    to="/contact" 
+                    className="flex-1 text-center py-3 bg-[#683422] text-white text-[10px] font-bold tracking-[0.2em] uppercase transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg btn-texture"
+                  >
+                    Book Now
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
@@ -353,19 +364,35 @@ const Home: React.FC = () => {
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               {groupSessions.map((service) => (
-                <Link key={service.id} to={`/service/${service.id}`} className="flex-shrink-0 w-[280px] md:w-[320px] snap-center group">
-                  <div className="block overflow-hidden aspect-[4/5] rounded-lg mb-4 relative bg-[#F4EFE6]">
+                <div key={service.id} className="flex-shrink-0 w-[280px] md:w-[320px] snap-center group flex flex-col">
+                  <Link to={`/service/${service.id}`} className="block overflow-hidden aspect-[4/5] rounded-lg mb-4 relative bg-[#F4EFE6]">
                     <img
                       src={service.image}
                       alt={service.title}
                       className="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-500"
                       onError={handleImageError}
                     />
+                  </Link>
+                  <Link to={`/service/${service.id}`}>
+                    <h3 className="text-lg font-serif text-[#3E2723] group-hover:text-[#A05035] transition-colors line-clamp-2 mb-2">{service.title}</h3>
+                  </Link>
+                  <p className="text-sm text-[#3E2723]/70 font-light line-clamp-2 mb-4">{service.shortDescription}</p>
+                  
+                  <div className="flex gap-3 mt-auto">
+                    <Link 
+                      to={`/service/${service.id}`} 
+                      className="flex-1 text-center py-2.5 border border-[#A05035]/30 text-[#A05035] text-[9px] font-bold tracking-widest uppercase hover:bg-[#A05035]/5 transition-all"
+                    >
+                      Details
+                    </Link>
+                    <Link 
+                      to="/contact" 
+                      className="flex-1 text-center py-2.5 bg-[#683422] text-white text-[9px] font-bold tracking-widest uppercase hover:opacity-95 transition-all btn-texture shadow-md"
+                    >
+                      Book Now
+                    </Link>
                   </div>
-                  <h3 className="text-lg font-serif text-[#3E2723] group-hover:text-[#A05035] transition-colors line-clamp-2 mb-2">{service.title}</h3>
-                  <p className="text-sm text-[#3E2723]/70 font-light line-clamp-2">{service.shortDescription}</p>
-                  <span className="inline-flex items-center gap-2 mt-3 text-[#A05035] text-[10px] font-bold tracking-widest uppercase">Explore <ArrowRight size={12} /></span>
-                </Link>
+                </div>
               ))}
             </div>
             <div className="flex justify-center gap-2 mt-8">
