@@ -304,7 +304,7 @@ const Home: React.FC = () => {
                   Personal 1:1
                 </div>
                 <Link to={`/service/${service.id}`} className="block overflow-hidden aspect-[4/5] mb-8 relative shrink-0">
-                  <img
+                  <img 
                     src={service.image}
                     alt={service.title}
                     className="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-500"
