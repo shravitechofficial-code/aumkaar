@@ -28,7 +28,7 @@ const Contact: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     const success = await submitForm({
       timestamp: new Date().toISOString(),
       formType: 'General Contact',
@@ -53,7 +53,7 @@ const Contact: React.FC = () => {
   return (
     <div className="bg-[#FDFBF7] min-h-screen pt-24 md:pt-32 pb-12 md:pb-20">
       <div className="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-20 xl:px-24">
-        
+
         <div className="text-center mb-10 md:mb-16">
           <span className="text-[#A05035] font-bold tracking-[0.4em] text-[10px] uppercase block mb-3 md:mb-4">Get in Touch</span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#3E2723] mb-4 md:mb-6">Begin Your Journey</h1>
@@ -63,7 +63,7 @@ const Contact: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-12 items-stretch shadow-2xl rounded-[2rem] md:rounded-[3rem] overflow-hidden border border-[#A05035]/10">
-          
+
           <div className="bg-texture text-[#FDFBF7] p-8 md:p-16 flex flex-col justify-center">
             <h3 className="text-3xl md:text-4xl font-serif mb-8 md:mb-12 text-[#F4EFE6]">Visit Our Sanctuary</h3>
             <div className="space-y-8 md:space-y-12 font-light">
@@ -73,7 +73,7 @@ const Contact: React.FC = () => {
               </div>
               <div>
                 <span className="block text-[10px] font-bold uppercase tracking-[0.4em] text-[#FDFBF7]/60 mb-3 md:mb-4">Direct Contact</span>
-                <p className="text-xl md:text-2xl opacity-95 font-serif">hello@aumkaar.com</p>
+                <p className="text-xl md:text-2xl opacity-95 font-serif">hello@aumkaar.in</p>
                 <p className="text-xl md:text-2xl opacity-95 font-serif">+91 9988166977</p>
               </div>
               <div>
@@ -95,7 +95,7 @@ const Contact: React.FC = () => {
                 <p className="text-[#3E2723]/60 font-light max-w-xs mx-auto">
                   Thank you for reaching out. We will connect with your soul's inquiry within 24 hours.
                 </p>
-                <button 
+                <button
                   onClick={() => setIsSubmitted(false)}
                   className="mt-10 text-[#A05035] font-bold tracking-widest text-[10px] uppercase border-b border-[#A05035]/20 pb-1"
                 >
@@ -107,40 +107,40 @@ const Contact: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                   <div className="group">
                     <label className="block text-[10px] font-bold text-[#A05035] uppercase tracking-[0.3em] mb-3">Your Name</label>
-                    <input 
+                    <input
                       disabled={isSubmitting}
                       required
-                      type="text" 
-                      className="w-full bg-[#FDFBF7] border-b border-[#A05035]/20 p-4 text-[#3E2723] focus:border-[#A05035] focus:outline-none placeholder-[#3E2723]/30 transition-all text-sm font-medium disabled:opacity-50" 
+                      type="text"
+                      className="w-full bg-[#FDFBF7] border-b border-[#A05035]/20 p-4 text-[#3E2723] focus:border-[#A05035] focus:outline-none placeholder-[#3E2723]/30 transition-all text-sm font-medium disabled:opacity-50"
                       placeholder="First & Last Name"
                       value={formData.name}
-                      onChange={(e) => setFormData({...formData, name: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     />
                   </div>
                   <div className="group">
                     <label className="block text-[10px] font-bold text-[#A05035] uppercase tracking-[0.3em] mb-3">Phone Number</label>
-                    <input 
+                    <input
                       disabled={isSubmitting}
                       required
-                      type="tel" 
-                      className="w-full bg-[#FDFBF7] border-b border-[#A05035]/20 p-4 text-[#3E2723] focus:border-[#A05035] focus:outline-none placeholder-[#3E2723]/30 transition-all text-sm font-medium disabled:opacity-50" 
+                      type="tel"
+                      className="w-full bg-[#FDFBF7] border-b border-[#A05035]/20 p-4 text-[#3E2723] focus:border-[#A05035] focus:outline-none placeholder-[#3E2723]/30 transition-all text-sm font-medium disabled:opacity-50"
                       placeholder="+91 00000 00000"
                       value={formData.phone}
-                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     />
                   </div>
                 </div>
-                
+
                 <div className="group">
                   <label className="block text-[10px] font-bold text-[#A05035] uppercase tracking-[0.3em] mb-3">Email Address</label>
-                  <input 
+                  <input
                     disabled={isSubmitting}
                     required
-                    type="email" 
-                    className="w-full bg-[#FDFBF7] border-b border-[#A05035]/20 p-4 text-[#3E2723] focus:border-[#A05035] focus:outline-none placeholder-[#3E2723]/30 transition-all text-sm font-medium disabled:opacity-50" 
+                    type="email"
+                    className="w-full bg-[#FDFBF7] border-b border-[#A05035]/20 p-4 text-[#3E2723] focus:border-[#A05035] focus:outline-none placeholder-[#3E2723]/30 transition-all text-sm font-medium disabled:opacity-50"
                     placeholder="you@example.com"
                     value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   />
                 </div>
 
@@ -148,25 +148,25 @@ const Contact: React.FC = () => {
                   <div className="group">
                     <label className="block text-[10px] font-bold text-[#A05035] uppercase tracking-[0.3em] mb-3">Preferred Date</label>
                     <div className="relative">
-                      <input 
+                      <input
                         disabled={isSubmitting}
-                        type="date" 
-                        className="w-full bg-[#FDFBF7] border-b border-[#A05035]/20 p-4 text-[#3E2723] focus:border-[#A05035] focus:outline-none transition-all text-sm font-medium disabled:opacity-50" 
+                        type="date"
+                        className="w-full bg-[#FDFBF7] border-b border-[#A05035]/20 p-4 text-[#3E2723] focus:border-[#A05035] focus:outline-none transition-all text-sm font-medium disabled:opacity-50"
                         value={formData.preferredDate}
-                        onChange={(e) => setFormData({...formData, preferredDate: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, preferredDate: e.target.value })}
                       />
                     </div>
                   </div>
                   <div className="group">
                     <label className="block text-[10px] font-bold text-[#A05035] uppercase tracking-[0.3em] mb-3">Preferred Time</label>
                     <div className="relative">
-                      <input 
+                      <input
                         disabled={isSubmitting}
-                        type="time" 
+                        type="time"
                         step="900"
-                        className="w-full bg-[#FDFBF7] border-b border-[#A05035]/20 p-4 text-[#3E2723] focus:border-[#A05035] focus:outline-none transition-all text-sm font-medium disabled:opacity-50" 
+                        className="w-full bg-[#FDFBF7] border-b border-[#A05035]/20 p-4 text-[#3E2723] focus:border-[#A05035] focus:outline-none transition-all text-sm font-medium disabled:opacity-50"
                         value={formData.preferredTime}
-                        onChange={(e) => setFormData({...formData, preferredTime: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, preferredTime: e.target.value })}
                       />
                     </div>
                   </div>
@@ -175,11 +175,11 @@ const Contact: React.FC = () => {
                 <div className="group">
                   <label className="block text-[10px] font-bold text-[#A05035] uppercase tracking-[0.3em] mb-3">Service Interest</label>
                   <div className="relative">
-                    <select 
+                    <select
                       disabled={isSubmitting}
                       className="w-full bg-[#FDFBF7] border-b border-[#A05035]/20 p-4 text-[#3E2723] focus:border-[#A05035] focus:outline-none appearance-none cursor-pointer text-sm font-medium disabled:opacity-50"
                       value={formData.service}
-                      onChange={(e) => setFormData({...formData, service: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                     >
                       <option>General Inquiry</option>
                       <option>Sound Healing : Naad</option>
@@ -199,20 +199,20 @@ const Contact: React.FC = () => {
 
                 <div className="group">
                   <label className="block text-[10px] font-bold text-[#A05035] uppercase tracking-[0.3em] mb-3">Your Message</label>
-                  <textarea 
+                  <textarea
                     disabled={isSubmitting}
                     required
-                    rows={4} 
-                    className="w-full bg-[#FDFBF7] border-b border-[#A05035]/20 p-4 text-[#3E2723] focus:border-[#A05035] focus:outline-none placeholder-[#3E2723]/30 transition-all text-sm font-medium resize-none disabled:opacity-50" 
+                    rows={4}
+                    className="w-full bg-[#FDFBF7] border-b border-[#A05035]/20 p-4 text-[#3E2723] focus:border-[#A05035] focus:outline-none placeholder-[#3E2723]/30 transition-all text-sm font-medium resize-none disabled:opacity-50"
                     placeholder="Tell us about your intentions for this journey..."
                     value={formData.message}
-                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   ></textarea>
                 </div>
 
-                <button 
+                <button
                   disabled={isSubmitting}
-                  type="submit" 
+                  type="submit"
                   className="w-full text-[#FDFBF7] font-bold tracking-[0.5em] uppercase py-5 rounded-full shadow-xl mt-4 active:scale-95 text-[11px] flex items-center justify-center gap-3 disabled:opacity-70 btn-texture"
                 >
                   {isSubmitting ? (
